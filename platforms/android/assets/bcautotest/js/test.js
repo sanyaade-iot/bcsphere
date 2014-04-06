@@ -21,27 +21,27 @@ describe('Bluetooth',function(){
     var services = [];
     var characteristics = [];
     var descriptors = [];
-    var deviceID = "78:C5:E5:99:26:54";
+    var deviceAddress = "78:C5:E5:99:26:54";
     var device;
     var characteristicValue;
     
-    document.addEventListener('bluetoothstatechange', onBluetoothStateChange, false);
-    document.addEventListener('devicedisconnect', onDeviceDisconnect, false);
-    
-    function onDeviceDisconnect(arg){
-        var deviceID = arg.param;
-        alert("device:"+ deviceID +" is disconnect!");
-    }
-    
-    function onBluetoothStateChange(){
-        if(BC.bluetooth.isopen){
-            alert("bluetooth is opend!");
-        }else{
-            alert("bluetooth is closed!");
-        }
-    }
     beforeEach(function() {
+        document.addEventListener('bluetoothstatechange', onBluetoothStateChange, false);
+        document.addEventListener('devicedisconnect', onDeviceDisconnect, false);
         document.addEventListener('newdevice', addNewDevice, false);
+         
+        function onDeviceDisconnect(arg){
+            var deviceAddress = arg.param;
+            alert("device:"+ deviceAddress +" is disconnect!");
+        }
+        
+        function onBluetoothStateChange(){
+            if(BC.bluetooth.isopen){
+                alert("bluetooth is opend!");
+            }else{
+                alert("bluetooth is closed!");
+            }
+        }
     });
     
     describe('Bluetooth Interface',function(){
@@ -51,9 +51,9 @@ describe('Bluetooth',function(){
         
         it('StartScan',function(){
            addNewDevice = jasmine.createSpy().andCallFake(function (arg){
-             console.log("deviceID "+ arg.deviceID);
-             expect(arg.deviceID).toBeDefined()
-             expect(arg.deviceID).not.toBeNull();
+             console.log("deviceAddress "+ arg.deviceAddress);
+             expect(arg.deviceAddress).toBeDefined()
+             expect(arg.deviceAddress).not.toBeNull();
             });
            document.addEventListener('newdevice', addNewDevice, false);
            BC.Bluetooth.StartScan();
@@ -132,7 +132,7 @@ describe('Bluetooth',function(){
   
     describe('Device Interface',function(){
         beforeEach(function() {
-            device = BC.bluetooth.devices[deviceID];
+            device = BC.bluetooth.devices[deviceAddress];
         });
         it('connect',function(){
             expect(device).not.toBeNull();
