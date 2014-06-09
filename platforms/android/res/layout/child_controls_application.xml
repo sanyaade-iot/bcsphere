@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#000000" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnHomePage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/back"
+                 />
+
+            <TextView
+                android:id="@+id/textShowName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                 />
+
+            <Button
+                android:id="@+id/btnMore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"	
+                android:background="#00000000"
+                />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:max="100"
+            android:progress="0" />
+    </LinearLayout>
+
+<!--     <LinearLayout -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="0dp" -->
+<!--         android:layout_weight="100" -->
+<!--         android:orientation="vertical" > -->
+
+        <!-- <TextView -->
+        <!-- android:id="@+id/textShowHint" -->
+        <!-- android:layout_width="match_parent" -->
+        <!-- android:layout_height="match_parent" -->
+        <!-- android:background="#ffffff" -->
+        <!-- android:gravity="center" -->
+        <!-- android:text="正在加载..." /> -->
+        <org.bcsphere.components.BCWebView
+            android:id="@+id/webChildControls"
+            android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="100" />
+<!--     </LinearLayout> -->
+
+</LinearLayout>
