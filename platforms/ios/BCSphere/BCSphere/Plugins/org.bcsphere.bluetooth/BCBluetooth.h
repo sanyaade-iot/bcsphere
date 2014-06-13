@@ -31,23 +31,15 @@
     NSTimer *stopScanTimer;
     NSInteger serviceNum;
     NSInteger characteristicNum;
-    NSInteger stateChangeCount;
+    NSString *device_address;
+
 }
 
 @property (strong, nonatomic) NSString *bluetoothState;
-@property (strong, nonatomic) ManagerEntity *managerEntity;
-@property (strong, nonatomic) NSString *device_address;
 @property (strong, nonatomic) NSMutableDictionary  *urlAndCallback;
 
 @property (strong, nonatomic) NSMutableArray *_peripherals;
-@property (strong, nonatomic) NSMutableArray *_allPeripherals;
-@property (strong, nonatomic) NSMutableArray *_services;
-@property (strong, nonatomic) NSMutableArray *_characteristics;
-@property (strong, nonatomic) NSMutableArray *_descriptors;
 
-@property (strong, nonatomic) NSMutableArray *servicesInfo;
-@property (strong, nonatomic) NSMutableArray *characteristicsInfo;
-@property (strong, nonatomic) NSMutableArray *descriptorsInfo;
 @property (strong, nonatomic) NSMutableArray *peripheralsInfo;
 @property (strong, nonatomic) NSMutableDictionary *advDataDic;
 @property (strong, nonatomic) NSMutableDictionary *RSSIDic;
@@ -60,15 +52,12 @@
 
 @property (strong, nonatomic) CBPeripheralManager *myPeripheralManager;
 @property (strong, nonatomic) CBCentralManager *myCentralManager;
+@property (strong, nonatomic) NSString *debugOnOrOff;
 @property (strong, nonatomic) NSTimer *stopScanTimer;
 
 @property (assign, nonatomic) BOOL isAddAllData;
 @property (assign, nonatomic) BOOL isEndOfAddService;
-@property (assign, nonatomic) BOOL isConnectedByManager;
-@property (assign, nonatomic) BOOL isVariableInit;
-@property (assign, nonatomic) BOOL isRead;
 @property (assign, nonatomic) BOOL isFindingPeripheral;
-@property (assign, nonatomic) BOOL isDisConnectAll;
 
 
 - (void)getEnvironment:(CDVInvokedUrlCommand *)command;
@@ -93,5 +82,4 @@
 - (void)getDeviceAllData:(CDVInvokedUrlCommand*)command;
 - (void)addServices:(CDVInvokedUrlCommand*)command;
 - (void)removeServices:(CDVInvokedUrlCommand*)command;
-
 @end

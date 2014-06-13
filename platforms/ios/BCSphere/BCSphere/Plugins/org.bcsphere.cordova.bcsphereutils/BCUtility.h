@@ -12,13 +12,16 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
+*/
 
 #import <Cordova/CDVPlugin.h>
 #import <Cordova/CDVJSON.h>
 
 @interface BCUtility : CDVPlugin
-{
-    NSString *callback;
-}
+
+@property (strong, nonatomic) NSMutableDictionary *callbackAndUrl;
+
+- (void)redirectToApp:(CDVInvokedUrlCommand*)command;
+- (void)retry:(CDVInvokedUrlCommand*)command;
+- (void)openApp:(CDVInvokedUrlCommand*)command;
 @end

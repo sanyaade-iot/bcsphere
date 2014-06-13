@@ -16,8 +16,19 @@
 
 #import "BCWebViewController.h"
 
-@interface BCPageController : BCWebViewController<UIWebViewDelegate, UIScrollViewDelegate,UIGestureRecognizerDelegate>
+@protocol BCPageControllerDelegate<NSObject>
 
+@optional
+- (void)setProgress:(float)progress;
+@end
+
+@interface BCPageController : BCWebViewController<UIWebViewDelegate,UIGestureRecognizerDelegate>
+{
+    NSTimer *loadProgress;
+}
+
+@property(nonatomic, assign) id<BCPageControllerDelegate> delegate;
+@property (nonatomic, strong) UIProgressView *progressView;
 
 - (void)btnClick:(id)sender;
 

@@ -33,6 +33,9 @@
     <feature name="BCUtility">
         <param name="ios-package" value="BCUtility" />
     </feature>
+    <feature name="BCLog">
+        <param name="ios-package" value="BCLog" />
+    </feature>
     <feature name="Battery">
         <param name="ios-package" value="CDVBattery" />
     </feature>

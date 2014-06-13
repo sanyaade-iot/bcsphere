@@ -23,8 +23,5 @@
 @interface BCMainViewController : UIViewController
 {
     BCPageManager *appManager;
-    DebugView *debug_view;
-    NSMutableArray *debugInformations;
-    
 }
 @end

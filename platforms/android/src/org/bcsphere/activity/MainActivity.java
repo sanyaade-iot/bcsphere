@@ -33,14 +33,13 @@ public class MainActivity extends CordovaActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		if (GuardService.isServiceRunning(MainActivity.this, "org.bcsphere.service.BCService")) {
 			startService(new Intent(MainActivity.this,BCService.class));
 		}
 		if (GuardService.isServiceRunning(MainActivity.this, "org.bcsphere.service.GuardService")) 	{
 			startService(new Intent(MainActivity.this,GuardService.class));
 		}
-
+		
 		pageManager = new PageManager(MainActivity.this);
 	}
 
@@ -73,7 +72,11 @@ public class MainActivity extends CordovaActivity {
 				String deviceAddress = intent.getStringExtra("deviceAddress");
 				String deviceType = intent.getStringExtra("deviceType");
 				String deviceName =  intent.getStringExtra("deviceName");
-
+				
+				if(url.contains("bclog")){
+				    return;
+				}
+				
 				if (!pageManager.contains(url) && url.length() > 0) {
 					pageManager.createPage(url, deviceName, deviceAddress, deviceType);
 					pageManager.showPage(url);

@@ -47,19 +47,60 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UIWebView*)newCordovaViewWithFrame:(CGRect)bounds
+- (id)getCommandInstance:(NSString*)pluginName
 {
-    if (isFirstView) {
-        return [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    }else{
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
-            return [[UIWebView alloc] initWithFrame:CGRectMake(0, 57, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-80)];
-            
+    // first, we try to find the pluginName in the pluginsMap
+    // (acts as a whitelist as well) if it does not exist, we return nil
+    // NOTE: plugin names are matched as lowercase to avoid problems - however, a
+    // possible issue is there can be duplicates possible if you had:
+    // "org.apache.cordova.Foo" and "org.apache.cordova.foo" - only the lower-cased entry will match
+    NSString* className = [self.pluginsMap objectForKey:[pluginName lowercaseString]];
+    
+    if (className == nil) {
+        return nil;
+    }
+    
+    id obj = [self.pluginObjects objectForKey:className];
+    if (!obj) {
+        if ([className isEqualToString:@"BCBluetooth"]) {
+            obj=[[NSClassFromString(className)alloc] initWithWebView:self.webView deviceAddress:[deviceInfo valueForKey:KEY_DEVICEADDRESS]];
         }else{
-            return [[UIWebView alloc] initWithFrame:CGRectMake(0, 57, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-100)];
-            
+            obj = [[NSClassFromString(className)alloc] initWithWebView:self.webView];
+        }
+        
+        if (obj != nil) {
+            [self registerPlugin:obj withClassName:className];
+        } else {
+            NSLog(@"CDVPlugin class %@ (pluginName: %@) does not exist.", className, pluginName);
         }
     }
+    return obj;
+}
+
+
+- (UIWebView*)newCordovaViewWithFrame:(CGRect)bounds
+{
+    CGFloat y = 0;
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    
+    if (isFirstView) {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            y = 0;
+            height = [UIScreen mainScreen].bounds.size.height;
+        }else{
+            y = -20;
+            height = [UIScreen mainScreen].bounds.size.height;
+        }
+    }else{
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            y = 57;
+            height = [UIScreen mainScreen].bounds.size.height - 80;
+        }else{
+            y = 57;
+            height = [UIScreen mainScreen].bounds.size.height - 60;
+        }
+    }
+    return [[UIWebView alloc] initWithFrame:CGRectMake(0, y, [UIScreen mainScreen].bounds.size.width, height)];
 }
 
 #pragma mark UIWebViewDelegate
@@ -76,15 +117,30 @@
 - (void)webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
 {
     [super webView:theWebView didFailLoadWithError:error];
+    NSMutableDictionary *redictCallbackInfo = [[NSMutableDictionary alloc] init];
+    [redictCallbackInfo setValue:CALLBACKREDICTERROR forKey:CALLBACKREDICT];
+    [redictCallbackInfo setValue:self.startPage forKey:KEY_URL];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CALLBACKREDICT object:redictCallbackInfo];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPage) name:REFRESHPAGE object:nil];
+    [self loadWithUrl:URL_ERRORPAGE];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
     [super webViewDidFinishLoad:theWebView];
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
+    NSString* log = self.startPage;
+    NSRange range = [log rangeOfString:URL_DEBUG];
+    if (range.length <= 0)
+    {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
+    }
     [self jsExecute:@"www/cordova.js"];
-
+    NSMutableDictionary *redictCallbackInfo = [[NSMutableDictionary alloc] init];
+    [redictCallbackInfo setValue:CALLBACKREDICTSUCCESS forKey:CALLBACKREDICT];
+    [redictCallbackInfo setValue:self.startPage forKey:KEY_URL];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CALLBACKREDICT object:redictCallbackInfo];
 }
 
 - (void)jsExecute:(NSString *)jsFilePath{
@@ -93,5 +149,17 @@
     [self.webView stringByEvaluatingJavaScriptFromString:cordovaString];
 }
 
+- (void)refreshPage{
+    [self loadWithUrl:self.startPage];
+}
+
+- (void)loadWithUrl:(NSString *)url{
+    NSURL* pageURL = nil;
+    NSURL* newURL = [NSURL URLWithString:url];
+    NSString* newFilePath = [self.commandDelegate pathForResource:[newURL path]];
+    pageURL = [NSURL fileURLWithPath:newFilePath];
+    NSURLRequest* newPageRequest = [NSURLRequest requestWithURL:pageURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
+    [self.webView loadRequest:newPageRequest];
+}
 
 @end

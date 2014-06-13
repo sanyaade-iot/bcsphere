@@ -1,15 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#ff222222"
     android:orientation="vertical" >
-
-<!--     <TextView -->
-<!--         android:id="@+id/textShowHint" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="match_parent" -->
-<!--         android:gravity="center" -->
-<!--         android:background="#ffffff" -->
-<!--         android:text="正在加载..." /> -->
 
     <org.bcsphere.components.BCWebView
         android:id="@+id/webChildControls"

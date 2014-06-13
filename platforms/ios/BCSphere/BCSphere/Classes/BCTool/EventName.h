@@ -20,8 +20,9 @@
 
 #define _MainScreenFrame                [[UIScreen mainScreen] bounds]
 
-#define URL_SCANVIEW                    @"apps/homepage/index.html"
-#define URL_DEBUG                       @"bc://debug&7"
+#define URL_HOMEPAGE                    @"apps/homepage/index.html"
+#define URL_ERRORPAGE                   @"apps/errorpage/index.html"
+#define URL_DEBUG                       @"apps/bclogpage/index.html"
 
 #define DEBUGOPEN                       @"openDebug"
 #define DEBUGBACK                       @"debugBack"
@@ -34,16 +35,21 @@
 #define DELETECURRENTVIEW               @"deleteWebView"
 #define DISCONNECTAPPDEVICE             @"DisConnectAllDevice"
 #define CALLBACKREDICT                  @"callbackRedict"
+#define REFRESHPAGE                     @"refreshPage"
+
+#define CALLBACKREDICTSUCCESS           @"true"
+#define CALLBACKREDICTERROR             @"false"
 
 #define KEY_URL                         @"url"
 #define KEY_DEVICEADDRESS               @"deviceAddress"
 #define KEY_DEVICENAME                  @"deviceName"
 #define KEY_DEVICETYPE                  @"deviceType"
-#define KEY_EXISTBACKGROUND             @"existBackground"
+#define KEY_EXISTBACKGROUND             @"isBackground"
 #define KEY_JUMPDIRECTION               @"jumpDirection"
 
 #define GO_BACK                         @"goBack"
 #define GO_FORWARD                      @"goForward"
+#define GETDEVICEID                     @"getOwnDeviceAddress"
 
 #define BUTTON_OPENDEBUG                1111122222
 #define BUTTON_GOBACK                   1111122223

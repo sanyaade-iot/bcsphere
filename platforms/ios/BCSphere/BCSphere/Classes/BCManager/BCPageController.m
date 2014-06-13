@@ -22,6 +22,7 @@
 @end
 
 @implementation BCPageController
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,7 +42,24 @@
     singleFingerTwo.numberOfTapsRequired = 1;
     singleFingerTwo.delegate = self;
     [self.webView addGestureRecognizer:singleFingerTwo];
-    
+    if (!isFirstView) {
+        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 57, _MainScreenFrame.size.width, 2)];
+        self.progressView.progressImage = [UIImage imageNamed:@"line.png"];
+        [self.view addSubview:self.progressView];
+    }
+}
+- (void)setProgress:(float)progress{
+    if (progress < 1.0) {
+        self.progressView.hidden = NO;
+    }
+    self.progressView.progress = progress;
+    if (progress == 1.0) {
+        [self performSelector:@selector(hiddenProgressView) withObject:nil afterDelay:0.5];
+    }
+}
+
+- (void)hiddenProgressView{
+    self.progressView.hidden = YES;
 }
 
 - (void)handleSingleFingerEvent:(UITapGestureRecognizer *)sender
@@ -98,6 +116,50 @@
     }
     
 }
+
+#pragma mark UIWebViewDelegate
+static int pro = 1;
+- (BOOL)webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
+}
+
+- (void)webViewDidStartLoad:(UIWebView*)theWebView
+{
+    [super webViewDidStartLoad:theWebView];
+    if (!isFirstView) {
+        loadProgress = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(changeProgress) userInfo:nil repeats:YES];
+    }
+}
+
+- (void)changeProgress{
+    [self setProgress:0.05 * pro];
+    if (0.05 * pro > 0.9) {
+        [loadProgress invalidate];
+        pro = 1;
+    }else{
+        pro++;
+    }
+}
+
+- (void)webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
+{
+    [super webView:theWebView didFailLoadWithError:error];
+    if (!isFirstView) {
+        [self setProgress:1.0];
+        [loadProgress invalidate];
+    }
+}
+
+- (void)webViewDidFinishLoad:(UIWebView*)theWebView
+{
+    [super webViewDidFinishLoad:theWebView];
+    if (!isFirstView) {
+        [self setProgress:1.0];
+        [loadProgress invalidate];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {

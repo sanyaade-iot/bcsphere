@@ -12,18 +12,14 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
+*/
 
-#import <UIKit/UIKit.h>
-#import "BCBluetooth.h"
+#import <Cordova/CDVPlugin.h>
+#import <Cordova/CDVJSON.h>
 
-@interface DebugView : UIView<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    UITextField *searchTextField;
+@interface BCLog : CDVPlugin
 
-}
-@property (strong,nonatomic) NSMutableArray *information;
-@property (strong,nonatomic) UITableView *debugTableView;
+@property (strong, nonatomic) NSMutableArray *logInformationCallbacks;
 
-- (void)refresh:(NSMutableArray *)information;
+- (void)trace:(CDVInvokedUrlCommand *)command;
 @end

@@ -46,6 +46,7 @@
 		6F73AF927CE042AE99BD6613 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 051E8C3C63AF4A6BB1E17949 /* CDVNotification.bundle */; };
 		7112134E191CCDBA00A256AE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7112134D191CCDBA00A256AE /* QuartzCore.framework */; };
 		7112143F191CD71A00A256AE /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7112143E191CD71A00A256AE /* config.xml */; };
+		718C5EB319499B8A00A384C5 /* BCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 718C5EB219499B8A00A384C5 /* BCLog.m */; };
 		71C2740E1945929C00ADFFC5 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 71C273FE1945929C00ADFFC5 /* back.png */; };
 		71C274261945939B00ADFFC5 /* BCMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71C2741F1945939B00ADFFC5 /* BCMainViewController.m */; };
 		71C274271945939B00ADFFC5 /* BCPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71C274211945939B00ADFFC5 /* BCPageController.m */; };
@@ -150,6 +151,8 @@
 		6EFB0FB95CA249A394E38783 /* CDVContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVContact.m; path = org.apache.cordova.contacts/CDVContact.m; sourceTree = "<group>"; };
 		7112134D191CCDBA00A256AE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7112143E191CD71A00A256AE /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = BCSphere/config.xml; sourceTree = "<group>"; };
+		718C5EB119499B8A00A384C5 /* BCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLog.h; path = org.bcsphere.bclog/BCLog.h; sourceTree = "<group>"; };
+		718C5EB219499B8A00A384C5 /* BCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLog.m; path = org.bcsphere.bclog/BCLog.m; sourceTree = "<group>"; };
 		71C273FE1945929C00ADFFC5 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		71C2741E1945939B00ADFFC5 /* BCMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCMainViewController.h; path = BCManager/BCMainViewController.h; sourceTree = "<group>"; };
 		71C2741F1945939B00ADFFC5 /* BCMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCMainViewController.m; path = BCManager/BCMainViewController.m; sourceTree = "<group>"; };
@@ -347,6 +350,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				718C5EB119499B8A00A384C5 /* BCLog.h */,
+				718C5EB219499B8A00A384C5 /* BCLog.m */,
 				71D6E9571943534400FFA199 /* BCUtility.m */,
 				71D6E9561943533300FFA199 /* BCUtility.h */,
 				95731FCDEBCE4DBE8F9107CA /* BCBluetooth.m */,
@@ -638,6 +643,7 @@
 				C33DE0DDBB5940B1AA942973 /* CDVFile.m in Sources */,
 				E9974DB17BD54775A4CE7748 /* CDVLocalFilesystem.m in Sources */,
 				4307D43F0E3949FC98E22AC1 /* CDVAssetLibraryFilesystem.m in Sources */,
+				718C5EB319499B8A00A384C5 /* BCLog.m in Sources */,
 				CAB2436B7C4947CCA7F5384E /* CDVLocation.m in Sources */,
 				522E7306143F461D9F109CA5 /* CDVInAppBrowser.m in Sources */,
 				6AE793B1AD23410CA212B34C /* CDVSound.m in Sources */,

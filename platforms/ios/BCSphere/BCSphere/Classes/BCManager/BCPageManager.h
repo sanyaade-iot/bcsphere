@@ -18,13 +18,14 @@
 #import "BCPageController.h"
 #import "EventName.h"
 
-@interface BCPageManager : UIView
+@interface BCPageManager : UIView<BCPageControllerDelegate>
 {
     BCPageController *homePage;
     BCPageController *page;
     NSMutableArray *pages;
     NSInteger numberOfPage;
     UIImageView *menuViewDown;
+
 }
 @property (nonatomic, strong) BCPageController *homePage;
 @property (nonatomic, strong) BCPageController *page;

@@ -22,6 +22,7 @@
 @synthesize numberOfPage;
 
 @synthesize menuViewDown;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -29,7 +30,7 @@
         self.pages = [[NSMutableArray alloc] init];
         BCPageController *homeWebView = [[BCPageController alloc] init];
         homeWebView.isFirstView = TRUE;
-        homeWebView.startPage = URL_SCANVIEW;
+        homeWebView.startPage = URL_HOMEPAGE;
         homePage = homeWebView;
         [self addSubview:homePage.view];
         self.backgroundColor = [UIColor clearColor];
@@ -64,19 +65,23 @@
 }
 
 - (void)btnClick:(id)btn{
-    [[NSNotificationCenter defaultCenter] postNotificationName:CALLBACKREDICT object:nil];
+    NSMutableDictionary *redictCallbackInfo = [[NSMutableDictionary alloc] init];
+    [redictCallbackInfo setValue:CALLBACKREDICTSUCCESS forKey:CALLBACKREDICT];
+    [redictCallbackInfo setValue:self.page.startPage forKey:KEY_URL];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CALLBACKREDICT object:redictCallbackInfo];
     [self.page btnClick:btn];
 }
 
 #pragma mark -
 #pragma mark create destroy show
 #pragma mark -
-- (BCPageController *)createPageWithUrl:(NSString *)webURL andDeviceInfo:(NSMutableDictionary *)deviceInfo andIsExistBackground:(BOOL)isExist{
+- (BCPageController *)createPageWithUrl:(NSString *)webURL andDeviceInfo:(NSMutableDictionary *)deviceInfo{
     BCPageController *appPage = [[BCPageController alloc] init];
     appPage.startPage = webURL;
     appPage.isFirstView = NO;
     appPage.deviceInfo = deviceInfo;
-    appPage.isExistBackground = isExist;
+    appPage.isExistBackground = [[deviceInfo valueForKey:KEY_EXISTBACKGROUND] boolValue];
+    appPage.delegate = self;
     [self.pages addObject:appPage];
     appPage.view.hidden = YES;
     return appPage;
@@ -96,7 +101,7 @@
 }
 
 - (void)showPage:(NSString *)webURL hide:(BOOL)hidden{
-    if ([webURL isEqualToString:URL_SCANVIEW]) {
+    if ([webURL isEqualToString:URL_HOMEPAGE]) {
         for (UIView *view in self.subviews) {
             view.hidden = YES;
         }
@@ -107,13 +112,12 @@
                 for (UIView *view in self.subviews) {
                     view.hidden = YES;
                 }
-                homePage.view.hidden = NO;
                 appPage.view.transform = CGAffineTransformIdentity;
                 appPage.view.hidden = hidden;
                 if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
                     appPage.view.frame=CGRectMake(_MainScreenFrame.size.width, 0, _MainScreenFrame.size.width, _MainScreenFrame.size.height);
                 }else{
-                    appPage.view.frame=CGRectMake(_MainScreenFrame.size.width, 20, _MainScreenFrame.size.width, _MainScreenFrame.size.height);
+                    appPage.view.frame=CGRectMake(_MainScreenFrame.size.width, 0, _MainScreenFrame.size.width, _MainScreenFrame.size.height);
                 }
                 appPage.view.backgroundColor=[UIColor clearColor];
                 appPage.webView.backgroundColor=[UIColor clearColor];
@@ -131,6 +135,7 @@
 #pragma mark -
 
 - (void)createPage:(NSString *)webURL andPageInfo:(NSMutableDictionary *)webInfo{
+    BOOL newPage = TRUE;
     if ([webURL isEqualToString:@""]) {
         return;
     }
@@ -139,13 +144,24 @@
         BCPageController *webview = [self.pages objectAtIndex:i];
         if ([webview.startPage isEqualToString:webURL]) {
             appPage = webview;
+            newPage = FALSE;
             break;
         }
     }
     if (!appPage) {
-        appPage = [self createPageWithUrl:webURL andDeviceInfo:webInfo andIsExistBackground:NO];
+        appPage = [self createPageWithUrl:webURL andDeviceInfo:webInfo];
     }
     [self showPage:webURL hide:NO];
+    if (newPage) {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        }else{
+            [UIView animateWithDuration:0.1 animations:^(void){
+                appPage.view.transform = CGAffineTransformTranslate(appPage.view.transform, _MainScreenFrame.size.width,0);
+            }completion:^(BOOL finished){
+                
+            }];
+        }
+    }
     
     [UIView animateWithDuration:0.2 animations:^(void){
         menuViewDown.transform = CGAffineTransformTranslate(menuViewDown.transform, -_MainScreenFrame.size.width,0);
@@ -169,7 +185,7 @@
         }
     }
     homePage.view.hidden = NO;
-    [UIView animateWithDuration:0.2f animations:^(void){
+    [UIView animateWithDuration:0.2 animations:^(void){
         appPage.view.transform = CGAffineTransformTranslate(appPage.view.transform, _MainScreenFrame.size.width,0);
         [menuViewDown removeFromSuperview];
     }completion:^(BOOL finished){

@@ -18,6 +18,9 @@
     <feature name="BCUtility">
         <param name="android-package" value="org.bcsphere.utilities.BCUtility" />
     </feature>
+    <feature name="BCLog">
+        <param name="android-package" value="org.bcsphere.bclog.BCLog" />
+    </feature>
     <feature name="Accelerometer">
         <param name="android-package" value="org.apache.cordova.devicemotion.AccelListener" />
     </feature>

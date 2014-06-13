@@ -114,6 +114,7 @@ public class BCBluetooth extends CordovaPlugin {
 				cordova.getThreadPool().execute(new Runnable() {
 					@Override
 					public void run() {
+						try {
 						if (action.equals("startScan")) {
 							bluetoothAPI.startScan(json, callbackContext);
 						} else if (action.equals("connect")) {
@@ -134,6 +135,11 @@ public class BCBluetooth extends CordovaPlugin {
 							bluetoothAPI.addServices(json, callbackContext);
 						} else if (action.equals("getRSSI")) {
 							bluetoothAPI.getRSSI(json, callbackContext);
+						}
+						} catch (Exception e) {
+							Tools.sendErrorMsg(callbackContext);
+						}catch (Error e) {
+							Tools.sendErrorMsg(callbackContext);
 						}
 					}
 				});

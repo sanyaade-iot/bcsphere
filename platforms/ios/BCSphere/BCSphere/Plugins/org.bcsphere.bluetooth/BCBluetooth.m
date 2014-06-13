@@ -12,7 +12,7 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
+*/
 
 
 #import "BCBluetooth.h"
@@ -21,152 +21,142 @@
 #import <Cordova/NSArray+Comparisons.h>
 #import "sys/sysctl.h"
 
-#define BLUETOOTH_STATE @"state"
-#define BLUETOOTH_OPEN @"bluetoothopen"
-#define BLUETOOTH_CLOSE @"bluetoothclose"
-#define DEVICE_NAME @"deviceName"
-#define DEVICE_ADDRESS @"deviceAddress"
-#define DEVICE_TYPE @"deviceType"
-#define PERIPHERALADDRESS @"peripheralAddress"
-#define MES @"mes"
-#define DATA @"data"
-#define ADVERTISEMENT_DATA @"advertisementData"
-#define SERVICES @"services"
-#define CHARACTERISTICS @"characteristics"
-#define DESCRIPTORS @"descriptors"
-#define SERVICE_INDEX @"serviceIndex"
-#define SERVICE_NAME @"serviceName"
-#define SERVICE_TYPE @"serviceType"
-#define SERVICE_UUID @"serviceUUID"
-#define UINQUE_ID @"uniqueID"
-#define CHARACTERISTIC_INDEX @"characteristicIndex"
-#define CHARACTERISTIC_VALUE @"characteristicValue"
-#define CHARACTERISTIC_NAME @"characteristicName"
-#define CHARACTERISTIC_PERMISSION @"characteristicPermission"
-#define CHARACTERISTIC_PROPERTY @"characteristicProperty"
-#define CHARACTERISTIC_UUID @"characteristicUUID"
-#define CHARACTERISTIC_UUIDS @"characteristicUUIDs"
-#define CHARACTERISTIC_VALUE_TYPE @"characteristicValueType"
-#define DESCRIPTOR_INDEX @"descriptorIndex"
-#define DESCRIPTOR_NAME @"descriptorName"
-#define DESCRIPTOR_PERMISSION @"descriptorPermission"
-#define DESCRIPTOR_UUID @"descriptorUUID"
-#define DESCRIPTOR_VALUE @"descriptorValue"
-#define DESCRIPTOR_VALUE_TYPE @"descriptorValueType"
-#define PERIPHERAL_RSSI @"RSSI"
-#define VALUE @"value"
-#define DATE @"date"
-#define DATE_FORMATE @"yyyy-MM-dd HH:mm:ss:SSS"
+#define BLUETOOTH_STATE                                         @"state"
+#define BLUETOOTH_OPEN                                          @"bluetoothopen"
+#define BLUETOOTH_CLOSE                                         @"bluetoothclose"
+#define DEVICE_NAME                                             @"deviceName"
+#define DEVICE_ADDRESS                                          @"deviceAddress"
+#define DEVICE_TYPE                                             @"deviceType"
+#define PERIPHERALADDRESS                                       @"peripheralAddress"
+#define MES                                                     @"mes"
+#define DATA                                                    @"data"
+#define ADVERTISEMENT_DATA                                      @"advertisementData"
+#define SERVICES                                                @"services"
+#define CHARACTERISTICS                                         @"characteristics"
+#define DESCRIPTORS                                             @"descriptors"
+#define SERVICE_INDEX                                           @"serviceIndex"
+#define SERVICE_NAME                                            @"serviceName"
+#define SERVICE_TYPE                                            @"serviceType"
+#define SERVICE_UUID                                            @"serviceUUID"
+#define UINQUE_ID                                               @"uniqueID"
+#define CHARACTERISTIC_INDEX                                    @"characteristicIndex"
+#define CHARACTERISTIC_VALUE                                    @"characteristicValue"
+#define CHARACTERISTIC_NAME                                     @"characteristicName"
+#define CHARACTERISTIC_PERMISSION                               @"characteristicPermission"
+#define CHARACTERISTIC_PROPERTY                                 @"characteristicProperty"
+#define CHARACTERISTIC_UUID                                     @"characteristicUUID"
+#define CHARACTERISTIC_UUIDS                                    @"characteristicUUIDs"
+#define CHARACTERISTIC_VALUE_TYPE                               @"characteristicValueType"
+#define DESCRIPTOR_INDEX                                        @"descriptorIndex"
+#define DESCRIPTOR_NAME                                         @"descriptorName"
+#define DESCRIPTOR_PERMISSION                                   @"descriptorPermission"
+#define DESCRIPTOR_UUID                                         @"descriptorUUID"
+#define DESCRIPTOR_VALUE                                        @"descriptorValue"
+#define DESCRIPTOR_VALUE_TYPE                                   @"descriptorValueType"
+#define PERIPHERAL_RSSI                                         @"RSSI"
+#define VALUE                                                   @"value"
+#define DATE                                                    @"date"
+#define DATE_FORMATE                                            @"yyyy-MM-dd HH:mm:ss:SSS"
 
-#define NOTAVAILABLE @"n/a"
-#define SUCCESS @"success"
-#define ERROR @"error"
-#define IS_TRUE @"true"
-#define IS_FALSE @"false"
-#define ENABLE @"enable"
-#define IS_CONNECTED @"isConnected"
-#define DISCONNECT @"disconnect"
+#define NOTAVAILABLE                                            @"n/a"
+#define SUCCESS                                                 @"success"
+#define ERROR                                                   @"error"
+#define IS_TRUE                                                 @"true"
+#define IS_FALSE                                                @"false"
+#define ENABLE                                                  @"enable"
+#define IS_CONNECTED                                            @"isConnected"
+#define DISCONNECT                                              @"disconnect"
 
-#define PERMISSION_READ @"read"
-#define PERMISSION_READ_ENCRYPTED @"readEncrypted"
-#define PERMISSION_READ_ENCRYPTED_MITM @"readEncryptedMitm"
-#define PERMISSION_WRITE @"write"
-#define PERMISSION_WRITE_ENCRYPTED_MITM @"writeEncryptedMitm"
-#define PERMISSION_WRITE_ENCRYPTED @"writeEncrypted"
-#define PERMISSION_WRITE_SIGEND @"writeSigend"
-#define PERMISSION_WRITE_SIGEND_MITM @"writeSigendMitm"
-#define PROPERTY_AUTHENTICATED_SIGNED_WTRTES @"authenticatedSignedWrites"
-#define PROPERTY_BROADCAST @"broadcast"
-#define PROPERTY_EXTENDED_PROPERTIES @"extendedProperties"
-#define PROPERTY_INDICATE @"indicate"
-#define PROPERTY_NOTIFY @"notify"
-#define PROPERTY_READ @"read"
-#define PROPERTY_WRITE @"write"
-#define PROPERTY_WRITE_WITHOUT_RESPONSE @"writeWithoutResponse"
-#define PROPERTY_NOTIFY_ENCRYPTION_REQUIRED @"NotifyEncryptionRequired"
-#define PROPERTY_INDICATE_ENCRYPTION_REQUIRED @"IndicateEncryptionRequired"
+#define PERMISSION_READ                                         @"read"
+#define PERMISSION_READ_ENCRYPTED                               @"readEncrypted"
+#define PERMISSION_READ_ENCRYPTED_MITM                          @"readEncryptedMitm"
+#define PERMISSION_WRITE                                        @"write"
+#define PERMISSION_WRITE_ENCRYPTED_MITM                         @"writeEncryptedMitm"
+#define PERMISSION_WRITE_ENCRYPTED                              @"writeEncrypted"
+#define PERMISSION_WRITE_SIGEND                                 @"writeSigend"
+#define PERMISSION_WRITE_SIGEND_MITM                            @"writeSigendMitm"
+#define PROPERTY_AUTHENTICATED_SIGNED_WTRTES                    @"authenticatedSignedWrites"
+#define PROPERTY_BROADCAST                                      @"broadcast"
+#define PROPERTY_EXTENDED_PROPERTIES                            @"extendedProperties"
+#define PROPERTY_INDICATE                                       @"indicate"
+#define PROPERTY_NOTIFY                                         @"notify"
+#define PROPERTY_READ                                           @"read"
+#define PROPERTY_WRITE                                          @"write"
+#define PROPERTY_WRITE_WITHOUT_RESPONSE                         @"writeWithoutResponse"
+#define PROPERTY_NOTIFY_ENCRYPTION_REQUIRED                     @"NotifyEncryptionRequired"
+#define PROPERTY_INDICATE_ENCRYPTION_REQUIRED                   @"IndicateEncryptionRequired"
 
-#define KCBADVDATA_LOCALNAME @"kCBAdvDataLocalName"
-#define LOCAL_NAME @"localName"
-#define KCBADVDATA_SERVICE_UUIDS @"kCBAdvDataServiceUUIDs"
-#define SERVICE_UUIDS @"serviceUUIDs"
-#define KCBADVDATA_TXPOWER_LEVEL @"kCBAdvDataTxPowerLevel"
-#define TXPOWER_LEVEL @"txPowerLevel"
-#define KCBADVDATA_SERVICE_DATA @"kCBAdvDataServiceData"
-#define SERVICE_DATA @"serviceData"
-#define KCBADVDATALOCAL_NAME @"kCBAdvDataManufacturerData"
-#define MANUFACTURER_DATA @"manufacturerData"
-#define KCBADVDATA_OVERFLOW_SERVICE_UUIDS @"kCBAdvDataOverflowServiceUUIDs"
-#define OVERFLOW_SERVICE_UUIDS @"overflowServiceUUIDs"
-#define KCBADVDATA_ISCONNECTABLE @"kCBAdvDataIsConnectable"
-#define ISCONNECTABLE @"isConnectable"
-#define KCBADCDATA_SOLICITED_SERVICE_UUIDS @"kCBAdvDataSolicitedServiceUUIDs"
-#define SOLICITED_SERVICE_UUIDS @"solicitedServiceUUIDs"
+#define KCBADVDATA_LOCALNAME                                    @"kCBAdvDataLocalName"
+#define LOCAL_NAME                                              @"localName"
+#define KCBADVDATA_SERVICE_UUIDS                                @"kCBAdvDataServiceUUIDs"
+#define SERVICE_UUIDS                                           @"serviceUUIDs"
+#define KCBADVDATA_TXPOWER_LEVEL                                @"kCBAdvDataTxPowerLevel"
+#define TXPOWER_LEVEL                                           @"txPowerLevel"
+#define KCBADVDATA_SERVICE_DATA                                 @"kCBAdvDataServiceData"
+#define SERVICE_DATA                                            @"serviceData"
+#define KCBADVDATALOCAL_NAME                                    @"kCBAdvDataManufacturerData"
+#define MANUFACTURER_DATA                                       @"manufacturerData"
+#define KCBADVDATA_OVERFLOW_SERVICE_UUIDS                       @"kCBAdvDataOverflowServiceUUIDs"
+#define OVERFLOW_SERVICE_UUIDS                                  @"overflowServiceUUIDs"
+#define KCBADVDATA_ISCONNECTABLE                                @"kCBAdvDataIsConnectable"
+#define ISCONNECTABLE                                           @"isConnectable"
+#define KCBADCDATA_SOLICITED_SERVICE_UUIDS                      @"kCBAdvDataSolicitedServiceUUIDs"
+#define SOLICITED_SERVICE_UUIDS                                 @"solicitedServiceUUIDs"
 
-#define EVENT_NAME @"eventName"
-#define EVENT_DISCONNECT @"disconnect"
-#define EVENT_ONSUBSCRIBE @"onsubscribe"
-#define EVENT_ONUNSUBSCRIBE @"onunsubscribe"
-#define EVENT_ONCHARACTERISTICREAD @"oncharacteristicread"
-#define EVENT_ONCHARACTERISTICWRITE @"oncharacteristicwrite"
-#define EVENT_NEWADVPACKET @"newadvpacket"
-#define EVENT_BLUETOOTHOPEN @"bluetoothopen"
-#define EVENT_BLUETOOTHCLOSE @"bluetoothclose"
+#define EVENT_NAME                                              @"eventName"
+#define EVENT_DISCONNECT                                        @"disconnect"
+#define EVENT_ONSUBSCRIBE                                       @"onsubscribe"
+#define EVENT_ONUNSUBSCRIBE                                     @"onunsubscribe"
+#define EVENT_ONCHARACTERISTICREAD                              @"oncharacteristicread"
+#define EVENT_ONCHARACTERISTICWRITE                             @"oncharacteristicwrite"
+#define EVENT_NEWADVPACKET                                      @"newadvpacket"
+#define EVENT_BLUETOOTHOPEN                                     @"bluetoothopen"
+#define EVENT_BLUETOOTHCLOSE                                    @"bluetoothclose"
 
-#define GETBLUETOOTHSTATE @"getBluetoothState"
-#define GETCONNECTEDDEVICES @"getConnectedDevices"
-#define SETNOTIFICATION @"setNotification"
-#define ADDSERVICE @"addService"
-#define ONREADREQUEST @"onReadRequest"
-#define ONWRIESTREQUEST @"onWriteRequest"
-#define WRITE_TYPE @"writeType"
-#define WRITE_VALUE @"writeValue"
-#define ISON @"isON"
-#define READ @"read"
-#define WRITE @"write"
-#define NOTIFY @"notify"
-#define ON_READ_REQUEST @"onReadRequest"
-#define ON_WRITE_REQUEST @"onWriteRequest"
-#define WRITEREQUESTVALUE @"writeRequestValue"
+#define GETBLUETOOTHSTATE                                       @"getBluetoothState"
+#define BLUETOOTHSTARTSTATE                                     @"bluetoothState"
+#define GETCONNECTEDDEVICES                                     @"getConnectedDevices"
+#define SETNOTIFICATION                                         @"setNotification"
+#define ADDSERVICE                                              @"addService"
+#define ONREADREQUEST                                           @"onReadRequest"
+#define ONWRIESTREQUEST                                         @"onWriteRequest"
+#define WRITE_TYPE                                              @"writeType"
+#define WRITE_VALUE                                             @"writeValue"
+#define ISON                                                    @"isON"
+#define READCHARACTERISTIC                                      @"readCharacteristor"
+#define READDESCRIPTOR                                          @"readDescriptor"
+#define WRITE                                                   @"write"
+#define ON_READ_REQUEST                                         @"onReadRequest"
+#define ON_WRITE_REQUEST                                        @"onWriteRequest"
+#define WRITEREQUESTVALUE                                       @"writeRequestValue"
 
-#define APP_ID @"appID"
-#define APP_URL @"appURL"
-#define API @"api"
-#define VERSION @"VERSION"
-#define IOS @"ios"
-#define IS_IOS_VERSION (([[[UIDevice currentDevice] systemVersion] floatValue] >=7.0)? (YES):(NO))
+#define LOGINFORMATION                                          @"logInformation"
+#define BLE_DEVICETYPE                                          @"BLE"
+#define APP_ID                                                  @"appID"
+#define API                                                     @"api"
+#define VERSION                                                 @"VERSION"
+#define IOS                                                     @"ios"
+#define GETDEVICEID                                             @"getOwnDeviceAddress"
 
-#define DEBUG 1
-#if DEBUG
-#define BC_DEBUG(modual) [self debug:modual information:[NSString stringWithFormat:@"%s",__FUNCTION__]];
-#define BC_DATA(info,s,d,uuid) [self debug:info style:s device:d UUID:uuid];
-#define BC_ERROR [self postErrorInformation];
-#define BC_SCANDATA [self debugScanDeviceUUID:[self getPeripheralUUID:peripheral] RSSI:[NSString stringWithFormat:@"%@",RSSI]];
-#define BC_GETRSSI [self debugRSSI:RSSI device:[self getPeripheralUUID:peripheral]];
-#define BC_SCDLIST(type) [self debugSCDs:type.UUID];
-#else
-#define BC_DEBUG(modual) /*modual*/
-#define BC_DATA(info) /*info*/
-#define BC_ERROR /**/
-#define BC_SCANDATA /**/
-#define BC_GETRSSI /**/
-#define BC_SCDLIST(type) /**/
-#endif
+#define IS_IOS_VERSION              (([[[UIDevice currentDevice] systemVersion] floatValue] >=7.0)? (YES):(NO))
+
+#define GAP_MODUAL                  1
+#define GATT_MODUAL                 2
+#define DATA_MODUAL                 4
+#define BCLOG_FUNC(modual)          [self logFunc:modual information:[NSString stringWithFormat:@"%s",__FUNCTION__]];
+#define BCLOG_DATA(info,s,d,uuid)   [self logValue:info operation:s device:d UUID:uuid];
+#define BCLOG_ERROR                 [self postErrorInformation];
+#define BCLOG_SCANDATA              [self logScanDeviceUUID:[self getPeripheralUUID:peripheral] RSSI:[NSString stringWithFormat:@"%@",RSSI]];
+#define BCLOG_RSSI                  [self logRSSI:RSSI device:[self getPeripheralUUID:peripheral]];
+#define BCLOG_UUID(type)            [self logUUID:type.UUID];
+
 
 @implementation BCBluetooth
 
 @synthesize bluetoothState;
-@synthesize managerEntity;
 @synthesize urlAndCallback;
 @synthesize _peripherals;
-@synthesize _allPeripherals;
-@synthesize _services;
-@synthesize _characteristics;
-@synthesize _descriptors;
 
-@synthesize servicesInfo;
-@synthesize characteristicsInfo;
-@synthesize descriptorsInfo;
 @synthesize peripheralsInfo;
 @synthesize advDataDic;
 @synthesize RSSIDic;
@@ -180,46 +170,27 @@
 @synthesize myPeripheralManager;
 @synthesize myCentralManager;
 
+@synthesize debugOnOrOff;
 @synthesize stopScanTimer;
 @synthesize isAddAllData;
 @synthesize isEndOfAddService;
-@synthesize isConnectedByManager;
-@synthesize isVariableInit;
-@synthesize isRead;
 @synthesize isFindingPeripheral;
-@synthesize isDisConnectAll;
 #pragma mark -
 #pragma mark BC Interface
 #pragma mark -
 - (void)pluginInitialize{
     [super pluginInitialize];
-    if (!self.isVariableInit) {
-        [self variableInit];
-    }
-}
-
-- (void)variableInit{
     
-    isDisConnectAll = FALSE;
-    stateChangeCount = 0;
-    isVariableInit = TRUE;
     isEndOfAddService = FALSE;
     isAddAllData = FALSE;
-    isConnectedByManager = FALSE;
-    isRead = FALSE;
     isFindingPeripheral = FALSE;
+
+    
     myPeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
     myCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     urlAndCallback = [[NSMutableDictionary alloc] init];
     _peripherals = [[NSMutableArray alloc] init];
-    _allPeripherals = [[NSMutableArray alloc] init];
-    _services = [[NSMutableArray alloc] init];
-    _characteristics = [[NSMutableArray alloc] init];
-    _descriptors = [[NSMutableArray alloc] init];
     
-    servicesInfo = [[NSMutableArray alloc] init];
-    characteristicsInfo = [[NSMutableArray alloc] init];
-    descriptorsInfo = [[NSMutableArray alloc] init];
     peripheralsInfo = [[NSMutableArray alloc] init];
     advDataDic = [[NSMutableDictionary alloc] init];
     RSSIDic = [[NSMutableDictionary alloc] init];
@@ -229,33 +200,38 @@
     writeReqAndCharacteristicDic = [[NSMutableDictionary alloc] init];
     readReqAndCharacteristicDic = [[NSMutableDictionary alloc] init];
     valueAndCharacteristicDic = [[NSMutableDictionary alloc] init];
-    bluetoothState = [[NSString alloc] init];
-    managerEntity = [[ManagerEntity alloc] init];
+    bluetoothState = BLUETOOTHSTARTSTATE;
+    debugOnOrOff = [[NSString alloc] init];
+}
+
+- (CDVPlugin*)initWithWebView:(UIWebView*)theWebView deviceAddress:(NSString *)dicPlugin{
+    self = [super init];
+    if (self) {
+        device_address = dicPlugin;
+    }
+    return self;
 }
 
 - (void)getEnvironment:(CDVInvokedUrlCommand *)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     NSMutableDictionary *callbackInfo = [[NSMutableDictionary alloc] init];
-    [callbackInfo setValue:self.device_address forKey:DEVICE_ADDRESS];
     [callbackInfo setValue:NOTAVAILABLE forKey:APP_ID];
     [callbackInfo setValue:IOS forKey:API];
-    [callbackInfo setValue:@"BLE" forKeyPath:DEVICE_TYPE];
+    [callbackInfo setValue:BLE_DEVICETYPE forKeyPath:DEVICE_TYPE];
     [callbackInfo setValue:[NSString stringWithFormat:@"%f",[[[UIDevice currentDevice] systemVersion] floatValue]] forKey:VERSION];
+    [callbackInfo setValue:device_address forKey:DEVICE_ADDRESS];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)getBluetoothState:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self.urlAndCallback setValue:command.callbackId forKey:GETBLUETOOTHSTATE];
-    if (bluetoothState.length > 0) {
-        [self backBluetoothState];
-    }else{
-        [self performSelector:@selector(backBluetoothState) withObject:nil afterDelay:1.0];
-    }
+    [self performSelector:@selector(getBluetoothStateCallback) withObject:nil afterDelay: (bluetoothState.length > 0 ? 0:1.0)];
+
 }
 
-- (void)backBluetoothState{
+- (void)getBluetoothStateCallback{
     NSMutableDictionary *callbackInfo = [[NSMutableDictionary alloc] init];
     [callbackInfo setValue:bluetoothState forKey:BLUETOOTH_STATE];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
@@ -263,28 +239,23 @@
 }
 
 - (void)addEventListener:(CDVInvokedUrlCommand *)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     if ([self existCommandArguments:command.arguments]) {
         NSString *eventName = [self parseStringFromJS:command.arguments keyFromJS:EVENT_NAME];
         [self.urlAndCallback setValue:command.callbackId forKey:eventName];
-        [self.urlAndCallback setValue:command.callbackId forKey:eventName];
-        NSLog(@"%@",eventName);
     }else{
         [self error:command.callbackId];
     }
 }
 
 - (void)openBluetooth:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self error:command.callbackId];
 }
 
 - (void)startScan:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     if ([self existCommandArguments:command.arguments]){
-        if (self._peripherals) {
-            [self._peripherals removeAllObjects];
-        }
         NSMutableArray *serviceUUIDs = [self parseArrayFromJS:command.arguments keyFromJS:SERVICE_UUIDS];
         if (serviceUUIDs) {
             if (serviceUUIDs.count > 0){
@@ -306,7 +277,7 @@
 }
 
 - (void)stopScan:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self.myCentralManager stopScan];
     self.isFindingPeripheral = TRUE;
     NSMutableDictionary *callbackInfo = [[NSMutableDictionary alloc] init];
@@ -316,28 +287,28 @@
 }
 
 - (void)creatPair:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self error:command.callbackId];
 }
 
 - (void)removePair:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self error:command.callbackId];
 }
 
 - (void)getPairedDevices:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self error:command.callbackId];
 }
 
 - (void)getConnectedDevices:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     [self.urlAndCallback setValue:command.callbackId forKey:GETCONNECTEDDEVICES];
     [self.myCentralManager retrieveConnectedPeripherals];
 }
 
 - (void)connect:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     if ([self existCommandArguments:command.arguments]){
         NSString *deviceAddress = [self parseStringFromJS:command.arguments keyFromJS:DEVICE_ADDRESS];
         [self.urlAndCallback setValue:command.callbackId forKey:deviceAddress];
@@ -387,18 +358,18 @@
 }
 
 - (void)stopToScan{
+    self.isFindingPeripheral = FALSE;
     [self.myCentralManager stopScan];
     [self error:[self.urlAndCallback valueForKey:[self.urlAndCallback valueForKey:PERIPHERALADDRESS]]];
 }
 
 - (void)disconnect:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(GAP_MODUAL)
     if ([self existCommandArguments:command.arguments]) {
         NSString *deviceAddress = [self parseStringFromJS:command.arguments keyFromJS:DEVICE_ADDRESS];
         [self.urlAndCallback setValue:command.callbackId forKey:deviceAddress];
         if ([self isNormalString:deviceAddress]) {
             CBPeripheral *peripheral = [self getPeripheral:deviceAddress];
-            self.isConnectedByManager = TRUE;
             if (peripheral) {
                 if (peripheral.isConnected) {
                     [self.myCentralManager cancelPeripheralConnection:peripheral];
@@ -417,12 +388,12 @@
 }
 
 - (void)getServices:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(2)
+    BCLOG_FUNC(GATT_MODUAL)
     if ([self existCommandArguments:command.arguments]) {
         NSString *deviceAddress = [self parseStringFromJS:command.arguments keyFromJS:DEVICE_ADDRESS];
         if ([self isNormalString:deviceAddress]){
             CBPeripheral *peripheral=[self getPeripheral:deviceAddress];
-            [self.urlAndCallback setValue:command.callbackId forKey:deviceAddress];
+            [self.urlAndCallback setValue:command.callbackId forKey:[NSString stringWithFormat:@"getServices:%@",deviceAddress]];
             if (peripheral) {
                 if (peripheral.services.count > 0){
                     NSMutableDictionary *callbackInfo = [self storeServiceInfo:peripheral];
@@ -444,7 +415,7 @@
 }
 
 - (void)getCharacteristics:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(2)
+    BCLOG_FUNC(GATT_MODUAL)
     if ([self existCommandArguments:command.arguments]){
         NSString *serviceIndex = [self parseStringFromJS:command.arguments keyFromJS:SERVICE_INDEX];
         NSString *deviceAddress = [self parseStringFromJS:command.arguments keyFromJS:DEVICE_ADDRESS];
@@ -481,7 +452,7 @@
 }
 
 - (void)getDescriptors:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(2)
+    BCLOG_FUNC(GATT_MODUAL)
     if ([self existCommandArguments:command.arguments]){
         NSString *charateristicIndex = [self parseStringFromJS:command.arguments keyFromJS:CHARACTERISTIC_INDEX];
         NSString *serviceIndex = [self parseStringFromJS:command.arguments keyFromJS:SERVICE_INDEX];
@@ -568,7 +539,7 @@
                                             peripheral.delegate = self;
                                             CBDescriptor *descripter = [characteristic.descriptors objectAtIndex: [descriptorIndex intValue] ];
                                             [peripheral writeValue:data forDescriptor:descripter];
-                                            BC_DATA(data,@"writeDescriptor",deviceAddress,[self CBUUIDFiltrToString:descripter.UUID])
+                                            BCLOG_DATA(data,@"writeDescriptor",deviceAddress,[self CBUUIDFiltrToString:descripter.UUID])
                                         }else{
                                             [self error:command.callbackId];
                                         }
@@ -579,7 +550,7 @@
                                         }else if (characteristic.properties & CBCharacteristicPropertyWrite){
                                             [peripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
                                         }
-                                        BC_DATA(data,@"writeCharacteristic",deviceAddress,[self CBUUIDFiltrToString:characteristic.UUID])
+                                        BCLOG_DATA(data,@"writeCharacteristic",deviceAddress,[self CBUUIDFiltrToString:characteristic.UUID])
                                     }
                                 }else{
                                     [self error:command.callbackId];
@@ -609,7 +580,6 @@
 
 - (void)readValue:(CDVInvokedUrlCommand*)command{
     if ([self existCommandArguments:command.arguments]){
-        [self.urlAndCallback setValue:command.callbackId forKey:READ];
         NSString *descriptorIndex = [self parseStringFromJS:command.arguments keyFromJS:DESCRIPTOR_INDEX];
         NSString *characteristicIndex = [self parseStringFromJS:command.arguments keyFromJS:CHARACTERISTIC_INDEX];
         NSString *serviceIndex = [self parseStringFromJS:command.arguments keyFromJS:SERVICE_INDEX];
@@ -625,13 +595,14 @@
                                 CBCharacteristic *characteristic=[service.characteristics objectAtIndex:[characteristicIndex intValue]];
                                 if ([self isNormalString:descriptorIndex]){
                                     if (characteristic.descriptors.count > [descriptorIndex intValue]) {
+                                        [self.urlAndCallback setValue:command.callbackId forKey:READDESCRIPTOR];
                                         peripheral.delegate = self;
                                         [peripheral readValueForDescriptor:[characteristic.descriptors objectAtIndex:[descriptorIndex intValue]]];
                                     }else{
                                         [self error:command.callbackId];
                                     }
                                 }else{
-                                    self.isRead = TRUE;
+                                    [self.urlAndCallback setValue:command.callbackId forKey:READCHARACTERISTIC];
                                     peripheral.delegate = self;
                                     [peripheral readValueForCharacteristic:[service.characteristics objectAtIndex:[characteristicIndex intValue]]];
                                 }
@@ -705,8 +676,7 @@
 }
 
 - (void)getDeviceAllData:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(2)
-    self.isAddAllData=TRUE;
+    BCLOG_FUNC(GATT_MODUAL)
     if ([self existCommandArguments:command.arguments]) {
         NSString *deviceAddress = [self parseStringFromJS:command.arguments keyFromJS:DEVICE_ADDRESS];
         [self.urlAndCallback setValue:command.callbackId forKey:[NSString stringWithFormat:@"perInfoCommand%@",deviceAddress]];
@@ -718,6 +688,7 @@
             }
             CBPeripheral *peripheral = [self getPeripheral:deviceAddress];
             if (peripheral) {
+                self.isAddAllData=TRUE;
                 peripheral.delegate=self;
                 [peripheral discoverServices:nil];
             }else{
@@ -824,7 +795,7 @@
 }
 
 - (void)addServices:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(1)
     if ([self existCommandArguments:command.arguments]) {
         [self.urlAndCallback setValue:command.callbackId forKey:ADDSERVICE];
         NSMutableDictionary *servicePacket=[[NSString stringWithFormat:@"%@",[command.arguments objectAtIndex:0]] JSONObject];
@@ -913,7 +884,7 @@
 }
 
 - (void)removeServices:(CDVInvokedUrlCommand*)command{
-    BC_DEBUG(1)
+    BCLOG_FUNC(1)
     if ([self existCommandArguments:command.arguments]) {
         NSString *uniqueID = [self parseStringFromJS:command.arguments keyFromJS:UINQUE_ID];
         if ([self isNormalString:uniqueID]) {
@@ -974,6 +945,7 @@
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error{
     if (!error) {
         if (self.isEndOfAddService) {
+            self.isEndOfAddService = FALSE;
             [self.myPeripheralManager startAdvertising:@{ CBAdvertisementDataLocalNameKey : @"bcsocket", CBAdvertisementDataServiceUUIDsKey:@[[CBUUID UUIDWithString:@"0000ffe0-0000-1000-8000-00805f9b34fb"]]}];
             CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback objectForKey:ADDSERVICE]];
@@ -1047,22 +1019,21 @@
 #pragma mark -
 #pragma mark CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-    if (stateChangeCount == 0) {
-        if (self.myCentralManager.state  != CBCentralManagerStatePoweredOn){
-            bluetoothState = IS_FALSE;
-        }else{
+    if ([bluetoothState isEqualToString:BLUETOOTHSTARTSTATE]) {
+        if (self.myCentralManager.state  == CBCentralManagerStatePoweredOn){
             bluetoothState = IS_TRUE;
+        }else{
+            bluetoothState = IS_FALSE;
         }
     }else{
-        if (self.myCentralManager.state  != CBCentralManagerStatePoweredOn){
-            bluetoothState = IS_FALSE;
-            [self.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireDocumentEvent('%@')",EVENT_BLUETOOTHCLOSE]];
-        }else{
+        if (self.myCentralManager.state  == CBCentralManagerStatePoweredOn){
             bluetoothState = IS_TRUE;
             [self.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireDocumentEvent('%@')",EVENT_BLUETOOTHOPEN]];
+        }else{
+            bluetoothState = IS_FALSE;
+            [self.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireDocumentEvent('%@')",EVENT_BLUETOOTHCLOSE]];
         }
     }
-    stateChangeCount = stateChangeCount +1;
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
@@ -1079,12 +1050,12 @@
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
         [result setKeepCallbackAsBool:TRUE];
         [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:EVENT_NEWADVPACKET]];
+        BCLOG_SCANDATA;
     }
 
     NSString *peripheralUUID = [self getPeripheralUUID:peripheral];
     if (self._peripherals.count == 0){
         self._peripherals = [[NSMutableArray alloc] initWithObjects:peripheral,nil];
-        BC_SCANDATA
     }else{
         BOOL isAdd = TRUE;
         for (int i = 0; i < [self._peripherals count]; i++)
@@ -1097,11 +1068,8 @@
         }
         if (isAdd){
             [self._peripherals addObject:peripheral];
-            BC_SCANDATA;
-
         }
     }
-    [self addPeripheralToAllPeripherals:self._peripherals];
     [self.advDataDic setValue:[self getAdvertisementData:advertisementData] forKey:peripheralUUID];
     [self.RSSIDic setValue:[NSString stringWithFormat:@"%@",RSSI] forKey:[self getPeripheralUUID:peripheral]];
 }
@@ -1110,11 +1078,6 @@
 {
     NSString *deviceAddress = [self getPeripheralUUID:peripheral];
     [self connectRequest:deviceAddress callbackId:[self.urlAndCallback valueForKey:deviceAddress] isKeepCallback:FALSE];
-    
-    NSMutableDictionary *appAndDevice = [[NSMutableDictionary alloc] init];
-    [appAndDevice setValue:peripheral forKey:@"peripheral"];
-    [appAndDevice setValue:[self.urlAndCallback objectForKey:@"appIdConnect"] forKey:@"appid"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"AppConnectDevice" object:appAndDevice];
 }
 
 - (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals{
@@ -1135,19 +1098,16 @@
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)aPeripheral error:(NSError *)error
 {
     NSString *deviceAddress = [self getPeripheralUUID:aPeripheral];
-    if (!self.isDisConnectAll) {
-        if (!error) {
-            [self connectRequest:deviceAddress callbackId:[self.urlAndCallback valueForKey:deviceAddress] isKeepCallback:TRUE];
-            self.isAddAllData=FALSE;
-        }else{
-            if (self.isConnectedByManager) {
-                [self error:[self.urlAndCallback valueForKey:deviceAddress]];
-            }else{
-                [self connectRequest:deviceAddress callbackId:[self.urlAndCallback valueForKey:EVENT_DISCONNECT] isKeepCallback:TRUE];
-            }
-        }
+    if (!error) {
+        [self connectRequest:deviceAddress callbackId:[self.urlAndCallback valueForKey:deviceAddress] isKeepCallback:TRUE];
+        self.isAddAllData = FALSE;
     }else{
-        self.isDisConnectAll = FALSE;
+        if ([self.urlAndCallback valueForKey:deviceAddress]) {
+            [self error:[self.urlAndCallback valueForKey:deviceAddress]];
+        }else{
+            self.isAddAllData = FALSE;
+            [self connectRequest:deviceAddress callbackId:[self.urlAndCallback valueForKey:EVENT_DISCONNECT] isKeepCallback:TRUE];
+        }
     }
 }
 
@@ -1160,7 +1120,7 @@
         [callbackInfo setValue:[self getPeripheralUUID:peripheral] forKey:DEVICE_ADDRESS];
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
         [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"getRssi%@",[self getPeripheralUUID:peripheral]]]];
-        BC_GETRSSI
+        BCLOG_RSSI
     }else{
         [self error:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"getRssi%@",[self getPeripheralUUID:peripheral]]]];
     }
@@ -1170,48 +1130,45 @@
 #pragma mark CBPeripheralDelegate
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
-    NSString *deviceAddress = [self getPeripheralUUID:peripheral];
-    if (!error) {
-        if (self.isAddAllData) {
-            [self getServiceInfo:peripheral];
-        }else{
+    if (self.isAddAllData) {
+        [self getServiceInfo:peripheral];
+    }else{
+        NSString *deviceAddress = [self getPeripheralUUID:peripheral];
+        if (!error) {
             NSMutableDictionary *callbackInfo = [self storeServiceInfo:peripheral];
             CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
-            [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback objectForKey:deviceAddress]];
+            [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:[NSString stringWithFormat:@"getServices:%@",deviceAddress]]];
+        }else{
+            [self error:[self.urlAndCallback valueForKey:[NSString stringWithFormat:@"getServices:%@",deviceAddress]]];
         }
-    }else{
-        [self error:[self.urlAndCallback objectForKey:deviceAddress]];
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
-    if (!error) {
+    if (self.isAddAllData) {
+        [self getAllCharacteristicInfo:service peripheral:peripheral];
+    }else{
         NSString *deviceAddress = [self getPeripheralUUID:peripheral];
-        if (self.isAddAllData) {
-            [self getAllCharacteristicInfo:service peripheral:peripheral];
-        }else{
+        if (!error) {
             NSMutableDictionary *callbackInfo = [self storeChatacteristicInfo:peripheral service:service];
             CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
-            [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"%d%@",[self getServiceIndex:peripheral service:service],deviceAddress]]];        }
-    }else{
-        [self error:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"%d%@",[self getServiceIndex:peripheral service:service],[NSString stringWithFormat:@"%@",[self getPeripheralUUID:peripheral]]]]];
+            [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"%d%@",[self getServiceIndex:peripheral service:service],deviceAddress]]];
+        }else{
+            [self error:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"%d%@",[self getServiceIndex:peripheral service:service],[NSString stringWithFormat:@"%@",deviceAddress]]]];
+        }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-    NSString *deviceAddress = [self getPeripheralUUID:peripheral];
-    if (!error) {
-        if (self.isAddAllData) {
-            [self addDescriptorArray:peripheral CBCharacteristic:characteristic];
-        }else{
+    if (self.isAddAllData) {
+        [self addDescriptorArray:peripheral CBCharacteristic:characteristic];
+    }else{
+        NSString *deviceAddress = [self getPeripheralUUID:peripheral];
+        if (!error) {
             NSMutableDictionary *callbackInfo = [self storeDescriptorInfo:peripheral characteristic:characteristic];
             CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
             [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"%d%d%@",[self getCharacterIndex:characteristic.service character:characteristic],[self getServiceIndex:peripheral service:characteristic.service],deviceAddress]]];
-        }
-    }else{
-        if (self.isAddAllData) {
-            [self addDescriptorArray:peripheral CBCharacteristic:characteristic];
         }else{
             [self error:[self.urlAndCallback objectForKey:[NSString stringWithFormat:@"%d%d%@",[self getCharacterIndex:characteristic.service character:characteristic],[self getServiceIndex:peripheral service:characteristic.service],deviceAddress]]];
         }
@@ -1228,7 +1185,7 @@
             NSString *serviceIndex = [NSString stringWithFormat:@"%d",[self getServiceIndex:peripheral service:service]];
             NSString *characteristicIndex = [NSString stringWithFormat:@"%d",[self getCharacterIndex:service character:characteristic]];
             NSString *value = [NSString stringWithFormat:@"%@",[self getBase64EncodedFromData:[characteristic value]]];
-            BC_DATA([characteristic value],@"characteristicNotify",deviceAddress,[self CBUUIDFiltrToString:characteristic.UUID])
+            BCLOG_DATA([characteristic value],@"characteristicNotify",deviceAddress,[self CBUUIDFiltrToString:characteristic.UUID])
             [callbackInfo setValue:value forKey:VALUE];
             [callbackInfo setValue:date forKey:DATE];
             [callbackInfo setValue:deviceAddress forKey:DEVICE_ADDRESS];
@@ -1238,20 +1195,19 @@
             [result setKeepCallbackAsBool:TRUE];
             [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:SETNOTIFICATION]];
         }
-        if (self.isRead){
+        if ([self.urlAndCallback valueForKey:READCHARACTERISTIC]){
             NSMutableDictionary *callbackInfo = [[NSMutableDictionary alloc] init];
             NSString *value = [NSString stringWithFormat:@"%@",[self getBase64EncodedFromData:[characteristic value]]];
-            BC_DATA([characteristic value],@"readCharacteristic",deviceAddress,[self CBUUIDFiltrToString:characteristic.UUID])
+            BCLOG_DATA([characteristic value],@"readCharacteristic",deviceAddress,[self CBUUIDFiltrToString:characteristic.UUID])
             [callbackInfo setValue:value forKey:VALUE];
             [callbackInfo setValue:date forKey:DATE];
             CDVPluginResult* result;
             result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
-            [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:READ]];
-            self.isRead = FALSE;
+            [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:READCHARACTERISTIC]];
         }
     }else{
-        if (self.isRead) {
-            [self error:[self.urlAndCallback valueForKey:READ]];
+        if ([self.urlAndCallback valueForKey:READCHARACTERISTIC]) {
+            [self error:[self.urlAndCallback valueForKey:READCHARACTERISTIC]];
         }
     }
 }
@@ -1262,16 +1218,16 @@
         NSString *date = [NSString stringWithFormat:@"%@",[self getDate]];
         NSString *descriptorValue = [NSString stringWithFormat:@"%@",descriptor.value];
         NSData *aData = [descriptorValue dataUsingEncoding: NSUTF8StringEncoding];
-        BC_DATA(aData,@"readDescriptor",[self getPeripheralUUID:peripheral],[self CBUUIDFiltrToString:descriptor.UUID]);
+        BCLOG_DATA(aData,@"readDescriptor",[self getPeripheralUUID:peripheral],[self CBUUIDFiltrToString:descriptor.UUID]);
         NSData *descriptorData = [descriptorValue dataUsingEncoding:NSUTF8StringEncoding];
         NSString *value = [NSString stringWithFormat:@"%@",[self getBase64EncodedFromData:descriptorData]];
         [callbackInfo setValue:value forKey:VALUE];
         [callbackInfo setValue:date forKey:DATE];
         CDVPluginResult* result;
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:callbackInfo];
-        [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:READ]];
+        [self.commandDelegate sendPluginResult:result callbackId:[self.urlAndCallback valueForKey:READDESCRIPTOR]];
     }else{
-        [self error:[self.urlAndCallback valueForKey:READ]];
+        [self error:[self.urlAndCallback valueForKey:READDESCRIPTOR]];
     }
 }
 
@@ -1364,7 +1320,7 @@
     [callbackInfo setValue:ERROR forKey:MES];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:callbackInfo];
     [self.commandDelegate sendPluginResult:result callbackId:string];
-    BC_ERROR
+    BCLOG_ERROR
 }
 
 - (void)postErrorInformation{
@@ -1466,96 +1422,66 @@
 }
 
 - (NSMutableDictionary *)storeServiceInfo:(CBPeripheral*)peripheral{
-    if (!self._services){
-        self._services = [[NSMutableArray alloc] init];
-    }else{
-        [self._services removeAllObjects];
-    }
-    if (!self.servicesInfo) {
-        self.servicesInfo = [[NSMutableArray alloc] init];
-    }else{
-        [self.servicesInfo removeAllObjects];
-    }
+    NSMutableArray *servicesInfo = [[NSMutableArray alloc] init];
     for(int i = 0; i < peripheral.services.count; i++){
         CBService *service = [peripheral.services objectAtIndex:i];
-        [self._services addObject:service];
         NSMutableDictionary *serviceInformation = [[NSMutableDictionary alloc] init];
         [serviceInformation setValue:[self getServiceName:service.UUID] forKey:SERVICE_NAME];
         [serviceInformation setValue:[NSString stringWithFormat:@"%@",[self CBUUIDFiltrToString:service.UUID]] forKey:SERVICE_UUID];
         [serviceInformation setValue:[NSString stringWithFormat:@"%d",i] forKey:SERVICE_INDEX];
-        [self.servicesInfo addObject:serviceInformation];
-        BC_SCDLIST(service)
+        [servicesInfo addObject:serviceInformation];
+        BCLOG_UUID(service)
     }
     NSString *deviceAddress = [self getPeripheralUUID:peripheral];
     NSMutableDictionary *serviceAndDeviceAddress = [[NSMutableDictionary alloc] init];
-    [serviceAndDeviceAddress setValue:self.servicesInfo forKey:SERVICES];
+    [serviceAndDeviceAddress setValue:servicesInfo forKey:SERVICES];
     [serviceAndDeviceAddress setValue:deviceAddress forKey:DEVICE_ADDRESS];
     return serviceAndDeviceAddress;
 }
 
 - (NSMutableDictionary *)storeChatacteristicInfo:(CBPeripheral*)peripheral service:(CBService*)service{
-    if (!self._characteristics) {
-        self._characteristics = [[NSMutableArray alloc] init];
-    }else{
-        [self._characteristics removeAllObjects];
-    }
-    if (!self.characteristicsInfo) {
-        self.characteristicsInfo = [[NSMutableArray alloc] init];
-    }else{
-        [self.characteristicsInfo removeAllObjects];
-    }
+    NSMutableArray *characteristicsInfo = [[NSMutableArray alloc] init];
     for (int i = 0; i < service.characteristics.count; i++) {
         CBCharacteristic *character = [service.characteristics objectAtIndex:i];
-        [self._characteristics addObject:character];
         NSMutableDictionary *characteristicInformation = [[NSMutableDictionary alloc] init];
         [characteristicInformation setValue:[self getServiceName:character.UUID] forKey:CHARACTERISTIC_NAME];
         [characteristicInformation setValue:[self CBUUIDFiltrToString:character.UUID] forKey:CHARACTERISTIC_UUID];
         [characteristicInformation setValue:[self printCharacteristicProperties:character] forKey:CHARACTERISTIC_PROPERTY];
         [characteristicInformation setValue:[NSString stringWithFormat:@"%d",i] forKey:CHARACTERISTIC_INDEX];
-        [self.characteristicsInfo addObject:characteristicInformation];
-        BC_SCDLIST(character)
+        [characteristicsInfo addObject:characteristicInformation];
+        BCLOG_UUID(character)
     }
     NSString *deviceAddress = [self getPeripheralUUID:peripheral];
     NSMutableDictionary *characteristicAndDeviceAddress = [[NSMutableDictionary alloc] init];
-    [characteristicAndDeviceAddress setValue:self.characteristicsInfo forKey:CHARACTERISTICS];
+    [characteristicAndDeviceAddress setValue:characteristicsInfo forKey:CHARACTERISTICS];
     [characteristicAndDeviceAddress setValue:deviceAddress forKey:DEVICE_ADDRESS];
     return characteristicAndDeviceAddress;
 }
 
 - (NSMutableDictionary *)storeDescriptorInfo:(CBPeripheral*)peripheral characteristic:(CBCharacteristic*)characteristic{
-    if (!self._descriptors) {
-        self._descriptors = [[NSMutableArray alloc] init];
-    }else{
-        [self._descriptors removeAllObjects];
-    }
-    if (!self.descriptorsInfo) {
-        self.descriptorsInfo = [[NSMutableArray alloc] init];
-    }else{
-        [self.descriptorsInfo removeAllObjects];
-    }
+    NSMutableArray *descriptorsInfo = [[NSMutableArray alloc] init];
     for (int i = 0; i < characteristic.descriptors.count; i++) {
         CBDescriptor *descriptor = [characteristic.descriptors objectAtIndex:i];
-        [self._descriptors addObject:descriptor];
         NSMutableDictionary *descriptorInformation = [[NSMutableDictionary alloc] init];
         [descriptorInformation setValue:[self getServiceName:descriptor.UUID] forKey:DESCRIPTOR_NAME];
         [descriptorInformation setValue:[self CBUUIDFiltrToString:descriptor.UUID] forKey:DESCRIPTOR_UUID];
         [descriptorInformation setValue:[NSString stringWithFormat:@"%d",i] forKey:DESCRIPTOR_INDEX];
-        [self.descriptorsInfo addObject:descriptorInformation];
-        BC_SCDLIST(descriptor)
+        [descriptorsInfo addObject:descriptorInformation];
+        BCLOG_UUID(descriptor)
     }
     NSString *deviceAddress = [self getPeripheralUUID:peripheral];
     NSMutableDictionary *descriptorAndDeviceAddress = [[NSMutableDictionary alloc] init];
-    [descriptorAndDeviceAddress setValue:self.descriptorsInfo forKey:DESCRIPTORS];
+    [descriptorAndDeviceAddress setValue:descriptorsInfo forKey:DESCRIPTORS];
     [descriptorAndDeviceAddress setValue:deviceAddress forKey:DEVICE_ADDRESS];
     return descriptorAndDeviceAddress;
 }
 
 - (void)addPeripheralToAllPeripherals:(NSMutableArray*)peripheralObj{
-    if (self._allPeripherals.count == 0) {
+    if (self._peripherals.count == 0) {
         if (peripheralObj.count > 0) {
             for (int j = 0; j < peripheralObj.count; j++) {
                 CBPeripheral *myPeripheral = [peripheralObj objectAtIndex:j];
-                [self._allPeripherals addObject:myPeripheral];
+                [self._peripherals addObject:myPeripheral];
             }
         }
     }else{
@@ -1564,15 +1490,15 @@
                 BOOL isAddAll = TRUE;
                 CBPeripheral *myPeripheral = [peripheralObj objectAtIndex:i];
                 NSString *myPeripheralUUID = [self getPeripheralUUID:myPeripheral];
-                for (int j = 0; j < self._allPeripherals.count; j++) {
-                    CBPeripheral *peripheralFromAll = [self._allPeripherals objectAtIndex:j];
+                for (int j = 0; j < self._peripherals.count; j++) {
+                    CBPeripheral *peripheralFromAll = [self._peripherals objectAtIndex:j];
                     NSString *peripheralFromAllUUID = [self getPeripheralUUID:peripheralFromAll];
                     if ([myPeripheralUUID isEqualToString:peripheralFromAllUUID] == YES){
                         isAddAll = FALSE;
                     }
                 }
                 if (isAddAll){
-                    [self._allPeripherals addObject:myPeripheral];
+                    [self._peripherals addObject:myPeripheral];
                 }
             }
         }
@@ -1679,10 +1605,10 @@
 
 - (CBPeripheral *)getPeripheral:(NSString *)strDeviceAddress{
     CBPeripheral *peripheral=nil;
-    if (self._allPeripherals.count > 0) {
-        for (int i = 0; i < [self._allPeripherals count]; i++)
+    if (self._peripherals.count > 0) {
+        for (int i = 0; i < [self._peripherals count]; i++)
         {
-            CBPeripheral* peripheral = [self._allPeripherals objectAtIndex:i];
+            CBPeripheral* peripheral = [self._peripherals objectAtIndex:i];
             const char *peripheralUUIDChar = [self UUIDToString:peripheral.UUID];
             NSString *peripheralUUIDStr = [NSString stringWithFormat:@"%s",peripheralUUIDChar];
             if ([[[NSUUID alloc] initWithUUIDString:peripheralUUIDStr] isEqual:[[NSUUID alloc] initWithUUIDString:strDeviceAddress]]) {
@@ -2033,43 +1959,33 @@
 # pragma mark DEBUG
 # pragma mark -
 
-- (void)debug:(int)modualNumber information:(NSString *)information{
-    if ([managerEntity.debugModual intValue] & modualNumber) {
-        NSRange foundModual = [information rangeOfString:@" "];
-        if (foundModual.length > 0) {
-            information = [information substringFromIndex:foundModual.location + foundModual.length];
-            information = [information stringByReplacingOccurrencesOfString:@":]" withString:@""];
-        }
-        if (modualNumber == 1) {
-            information = [@"gap: enter " stringByAppendingString:information];
-        }if (modualNumber == 2) {
-            information = [@"gatt: enter " stringByAppendingString:information];
-        }if (modualNumber == 4) {
-            information = [@"data: enter " stringByAppendingString:information];
-        }
-        NSMutableDictionary *debug = [[NSMutableDictionary alloc] init];
-        [debug setValue:information forKey:@"debugInformation"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"debug" object:debug];
+- (void)logFunc:(int)modualNumber information:(NSString *)information{
+    NSRange foundModual = [information rangeOfString:@" "];
+    if (foundModual.length > 0) {
+        information = [information substringFromIndex:foundModual.location + foundModual.length];
+        information = [information stringByReplacingOccurrencesOfString:@":]" withString:@""];
     }
+    if (modualNumber == GAP_MODUAL) {
+        information = [@"gap: enter " stringByAppendingString:information];
+    }if (modualNumber == GATT_MODUAL) {
+        information = [@"gatt: enter " stringByAppendingString:information];
+    }if (modualNumber == DATA_MODUAL) {
+        information = [@"data: enter " stringByAppendingString:information];
+    }
+    [self post:information];
 }
 
-- (void)debugRSSI:(NSString *)information device:(NSString *)deviceUUID{
-    if ([managerEntity.debugModual intValue] & 4) {
-        NSString *device = [NSString stringWithFormat:@"device = %@",deviceUUID];
-        [self post:device];
-        NSString *RSSIStr = [NSString stringWithFormat:@"rssi = %@",information];
-        [self post:RSSIStr];
-    }
+- (void)logRSSI:(NSString *)information device:(NSString *)deviceUUID{
+    NSString *getRssi = [NSString stringWithFormat:@"device = %@  get rssi = %@",deviceUUID,information];
+    [self post:getRssi];
 }
 
-- (void)debugScanDeviceUUID:(NSString *)deviceUUID RSSI:(NSString *)deviceRSSI{
-    if ([managerEntity.debugModual intValue] & 1) {
-        NSString *scanDeviceInfo = [NSString stringWithFormat:@"device = %@  rssi = %@",deviceUUID,deviceRSSI];
-        [self post:scanDeviceInfo];
-    }
+- (void)logScanDeviceUUID:(NSString *)deviceUUID RSSI:(NSString *)deviceRSSI{
+    NSString *scanDeviceInfo = [NSString stringWithFormat:@"device = %@  scan rssi = %@",deviceUUID,deviceRSSI];
+    [self post:scanDeviceInfo];
 }
 
-- (void)debugSCDs:(CBUUID *)UUID{
+- (void)logUUID:(CBUUID *)UUID{
     NSString *results = [UUID.data description];
     results = [results stringByReplacingOccurrencesOfString:@"<" withString:@""];
     results = [results stringByReplacingOccurrencesOfString:@">" withString:@""];
@@ -2077,115 +1993,106 @@
     [self post:result];
 }
 
-- (void)debug:(NSData *)information style:(NSString *)style device:(NSString *)deviceUUID UUID:(NSString *)UUID{
-    if ([managerEntity.debugModual intValue] & 4) {
-        Byte *testByte = (Byte *)[information bytes];
-        NSString *info = [@"data: " stringByAppendingString:[NSString stringWithFormat:@"%@ :",style]];
-        [self post:info];
-        NSString *device = [NSString stringWithFormat:@"device = %@",deviceUUID];
-        [self post:device];
-        NSString *uuid = [NSString stringWithFormat:@"uuid = %@",UUID];
-        [self post:uuid];
-        [self post:@"value:"];
-        NSString *results = [NSString stringWithFormat:@"%@",information];
-        results = [results uppercaseString];
-        results = [results stringByReplacingOccurrencesOfString:@"<" withString:@""];
-        results = [results stringByReplacingOccurrencesOfString:@">" withString:@""];
-        results = [results stringByReplacingOccurrencesOfString:@" " withString:@""];
-        NSString *infoString = results;
-        NSMutableArray *infoArray = [[NSMutableArray alloc] init];
-        for (int j = 0; j < infoString.length / 16 + 1; j++) {
-            NSString *beginPlace = @"";
-            NSLog(@"%d ,%d",j,infoString.length / 16);
-            NSMutableString *result = [[NSMutableString alloc] init];
-            NSString *asciiSting;
-            if (results.length <= 16) {
-                result = [[NSMutableString alloc] initWithString:results];
-                for (int i = 0; i < results.length / 2; i++) {
-                    [result insertString:@" " atIndex:2 + 2 * i + i];
-                }
-                asciiSting = [self getAsciiString:testByte infoDataLength:results.length / 2 byteIndex:j * 8];
-                for (int k = 0; k < 8 - results.length / 2; k++) {
-                    asciiSting = [@"     " stringByAppendingString:asciiSting];
-                }
-                j++;
-                beginPlace = [self ToHex:(j-1) * 8];
-            }else{
-                NSString *subString = [results substringToIndex:16];
-                result = [[NSMutableString alloc] initWithString:subString];
-                results = [results substringFromIndex:16];
-                for (int i = 0; i < subString.length / 2; i++) {
-                    [result insertString:@" " atIndex:2 + 2 * i + i];
-                }
-                [infoArray addObject:result];
-                asciiSting = [self getAsciiString:testByte infoDataLength:8 byteIndex:j * 8];
-                beginPlace = [self ToHex:j * 8];
+- (void)logValue:(NSData *)value operation:(NSString *)operation device:(NSString *)deviceUUID UUID:(NSString *)UUID{
+    [self post:[@"data: " stringByAppendingString:[NSString stringWithFormat:@"%@ :",operation]]];
+    [self post:[NSString stringWithFormat:@"device = %@",deviceUUID]];
+    [self post:[NSString stringWithFormat:@"uuid = %@",UUID]];
+    [self post:@"value:"];
+
+    Byte *valueByte = (Byte *)[value bytes];
+    NSString *valueString = [NSString stringWithFormat:@"%@",value];
+    valueString = [valueString uppercaseString];
+    valueString = [valueString stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    valueString = [valueString stringByReplacingOccurrencesOfString:@">" withString:@""];
+    valueString = [valueString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSInteger valueStringLength = valueString.length;
+    for (int j = 0; j < valueStringLength / 16 + 1; j++) {
+        NSString *valueInfo = @"";
+        NSMutableString *result = [[NSMutableString alloc] init];
+        NSString *asciiString;
+        if (valueString.length <= 16) {
+            result = [[NSMutableString alloc] initWithString:valueString];
+            for (int i = 0; i < valueString.length / 2; i++) {
+                [result insertString:@" " atIndex:2 + 2 * i + i];
             }
-            beginPlace = [beginPlace stringByAppendingString:(NSString *)result];
-            beginPlace = [beginPlace stringByAppendingString:asciiSting];
-            [self post:beginPlace];
+            asciiString = [self getAsciiString:valueByte infoDataLength:valueString.length / 2 byteIndex:j * 8];
+            for (int k = 0; k < 8 - valueString.length / 2; k++) {
+                asciiString = [@"     " stringByAppendingString:asciiString];
+            }
+            j++;
+            valueInfo = [self changeToHexString:(j-1) * 8];
+        }else{
+            NSString *subString = [valueString substringToIndex:16];
+            result = [[NSMutableString alloc] initWithString:subString];
+            valueString = [valueString substringFromIndex:16];
+            for (int i = 0; i < subString.length / 2; i++) {
+                [result insertString:@" " atIndex:2 + 2 * i + i];
+            }
+            asciiString = [self getAsciiString:valueByte infoDataLength:8 byteIndex:j * 8];
+            valueInfo = [self changeToHexString:j * 8];
         }
+        valueInfo = [valueInfo stringByAppendingString:(NSString *)result];
+        valueInfo = [valueInfo stringByAppendingString:asciiString];
+        [self post:valueInfo];
     }
 }
 
 - (NSString *)getAsciiString:(Byte *)byte infoDataLength:(int)infoDataLength byteIndex:(int)byteIndex{
     NSString *result = [[NSString alloc] init];
     for (int i = 0; i < infoDataLength; i++) {
-        NSData *Ddd = [[NSData alloc] initWithBytes:&byte[i + byteIndex] length:1];
-        NSString *asciiSting = [[NSString alloc] initWithData:Ddd encoding:NSASCIIStringEncoding];
+        NSData *data = [[NSData alloc] initWithBytes:&byte[i + byteIndex] length:1];
+        NSString *asciiString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
         if (byte[i + byteIndex] < 34 || byte[i + byteIndex] > 125) {
             result = [result stringByAppendingString:@"."];
         }else{
-            result = [result stringByAppendingString:asciiSting];
+            result = [result stringByAppendingString:asciiString];
         }
     }
     result = [NSString stringWithFormat:@"     %@",result];
     return result;
 }
 
--(NSString *)ToHex:(long long int)tmpid
+-(NSString *)changeToHexString:(long long int)num
 {
-    NSString *nLetterValue;
-    NSString *str =@"";
-    long long int ttmpig;
+    NSString *letterOfHexValue;
+    NSString *result =@"";
+    long long int remainderNum;
     for (int i = 0; i < 9; i++) {
-        ttmpig=tmpid % 16;
-        tmpid=tmpid / 16;
-        switch (ttmpig)
+        remainderNum=num % 16;
+        num=num / 16;
+        switch (remainderNum)
         {
             case 10:
-                nLetterValue =@"A";break;
+                letterOfHexValue =@"A";break;
             case 11:
-                nLetterValue =@"B";break;
+                letterOfHexValue =@"B";break;
             case 12:
-                nLetterValue =@"C";break;
+                letterOfHexValue =@"C";break;
             case 13:
-                nLetterValue =@"D";break;
+                letterOfHexValue =@"D";break;
             case 14:
-                nLetterValue =@"E";break;
+                letterOfHexValue =@"E";break;
             case 15:
-                nLetterValue =@"F";break;
-            default:nLetterValue=[[NSString alloc]initWithFormat:@"%lli",ttmpig];
+                letterOfHexValue =@"F";break;
+            default:letterOfHexValue=[[NSString alloc]initWithFormat:@"%lli",remainderNum];
                 
         }
-        str = [nLetterValue stringByAppendingString:str];
-        if (tmpid == 0) {
+        result = [letterOfHexValue stringByAppendingString:result];
+        if (num == 0) {
             break;
         }
     }
-    if (str.length < 4) {
-        for (int i = 0; i < 4 - str.length; ) {
-            str = [@"0" stringByAppendingString:str];
+    if (result.length < 4) {
+        for (int i = 0; i < 4 - result.length; ) {
+            result = [@"0" stringByAppendingString:result];
         }
     }
-    str = [str stringByAppendingString:@" : "];
-    return str;
+    result = [result stringByAppendingString:@" : "];
+    return result;
 }
 
 - (void)post:(NSString *)info{
-    NSMutableDictionary *debug = [[NSMutableDictionary alloc] init];
-    [debug setValue:info forKey:@"debugInformation"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"debug" object:debug];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LOGINFORMATION object:info];
 }
 
 @end
