@@ -1,0 +1,6 @@
+[submodule "platforms/android/assets/www/apps"]
+	path = platforms/android/assets/www/apps
+	url = https://github.com/bcsphere/apps
+[submodule "platforms/android/assets/www/framework"]
+	path = platforms/android/assets/www/framework
+	url = https://github.com/bcsphere/framework
