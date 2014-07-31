@@ -112,7 +112,6 @@ public class Notification extends CordovaPlugin {
 	 * @param count     Number of times to play notification
 	 */
 	public synchronized void beep() {
-		System.out.println("startbeeeeeeeeeeeeeeeeeeeep");
 		if (ringtone == null) {
 			ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		}
@@ -130,7 +129,6 @@ public class Notification extends CordovaPlugin {
 	}
 
 	public  synchronized void stopBeep(){
-		System.out.println("stopbeeeeeeeeeeeeeeeeeeeep");
 		if (notification != null && isTrue) {
 			notification.stop();
 			isTrue = false;

@@ -302,7 +302,9 @@ public class NativeToJsMessageQueue {
         final Runnable runnable = new Runnable() {
             public void run() {
                 if (!queue.isEmpty()) {
-                    webView.setNetworkAvailable(online);
+                	//online = !online;
+                	webView.loadUrlNow("javascript:" + popAndEncodeAsJs());
+                    //webView.setNetworkAvailable(online);
                 }
             }                
         };

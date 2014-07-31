@@ -72,6 +72,8 @@ public class CordovaWebView extends WebView {
 
     public BCPage page;
     
+    public Context mContext;
+    
     private BroadcastReceiver receiver;
 
 
@@ -215,6 +217,7 @@ public class CordovaWebView extends WebView {
 
 
     private void initWebViewClient(CordovaInterface cordova) {
+    	mContext = this.getContext();
         if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB ||
                 android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1)
         {
@@ -306,7 +309,7 @@ public class CordovaWebView extends WebView {
                     updateUserAgentString();
                 }
             };
-            this.cordova.getActivity().registerReceiver(this.receiver, intentFilter);
+            this.cordova.getActivity().getApplicationContext().registerReceiver(this.receiver, intentFilter);
         }
         // end CB-1405
 
@@ -629,10 +632,10 @@ public class CordovaWebView extends WebView {
      */
     private void loadConfiguration() {
  
-        if ("true".equals(this.getProperty("Fullscreen", "false"))) {
-            this.cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            this.cordova.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
+//        if ("true".equals(this.getProperty("Fullscreen", "false"))) {
+//            this.cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//            this.cordova.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        }
     }
 
     /**
@@ -700,7 +703,7 @@ public class CordovaWebView extends WebView {
             }
         }
         
-        return super.onKeyDown(keyCode, event);
+        return true;
     }
     
 
@@ -729,7 +732,7 @@ public class CordovaWebView extends WebView {
                         //this.activityState = ACTIVITY_EXITING;
                     	//return false;
                     	// If they hit back button when app is initializing, app should exit instead of hang until initilazation (CB2-458)
-                    	this.cordova.getActivity().finish();
+//                    	this.cordova.getActivity().finish();
                     }
                 }
             }
@@ -754,7 +757,7 @@ public class CordovaWebView extends WebView {
         }
 
         //Does webkit change this behavior?
-        return super.onKeyUp(keyCode, event);
+        return true;
     }
 
     
@@ -836,11 +839,10 @@ public class CordovaWebView extends WebView {
         if (this.pluginManager != null) {
             this.pluginManager.onDestroy();
         }
-        
         // unregister the receiver
         if (this.receiver != null) {
             try {
-                this.cordova.getActivity().unregisterReceiver(this.receiver);
+                this.cordova.getActivity().getApplicationContext().unregisterReceiver(this.receiver);
             } catch (Exception e) {
                 Log.e(TAG, "Error unregistering configuration receiver: " + e.getMessage(), e);
             }

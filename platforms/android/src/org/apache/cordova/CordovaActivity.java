@@ -264,7 +264,7 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
             getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
 
-        if(this.getBooleanProperty("SetFullscreen", false))
+        /*if(this.getBooleanProperty("SetFullscreen", false))
         {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -273,7 +273,7 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
         {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        }
+        }*/
         // This builds the view.  We could probably get away with NOT having a LinearLayout, but I like having a bucket!
         Display display = getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
@@ -354,7 +354,6 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
     @SuppressLint("NewApi")
     public void init(CordovaWebView webView, CordovaWebViewClient webViewClient, CordovaChromeClient webChromeClient) {
         LOG.d(TAG, "CordovaActivity.init()");
-
         // Set up web container
         this.appView = webView;
         this.appView.setId(100);
@@ -771,7 +770,6 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
 
         // hide the splash screen to avoid leaking a window
         this.removeSplashScreen();
-
         if (this.appView != null) {
             appView.handleDestroy();
         }
@@ -853,8 +851,9 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
      * End this activity by calling finish for activity
      */
     public void endActivity() {
+    	System.out.println("CordovaActivity endActivity finish");
         this.activityState = ACTIVITY_EXITING;
-        super.finish();
+       // super.finish();
     }
 
 
@@ -900,8 +899,8 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
                 return;
             Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
             Log.d(TAG, "result = " + result);
-//            Uri filepath = Uri.parse("file://" + FileUtils.getRealPathFromURI(result, this));
-//            Log.d(TAG, "result = " + filepath);
+            //Uri filepath = Uri.parse("file://" + FileUtils.getRealPathFromURI(result, this));
+            //Log.d(TAG, "result = " + filepath);
             mUploadMessage.onReceiveValue(result);
             mUploadMessage = null;
         }
@@ -989,7 +988,8 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
                     dlg.create();
                     dlg.show();
                 } catch (Exception e) {
-                    finish();
+                	System.out.println("CordovaActivity displayError finish");
+//                    finish();
                 }
             }
         });
@@ -1089,12 +1089,12 @@ public class CordovaActivity extends FragmentActivity implements CordovaInterfac
                 
                 // Create and show the dialog
                 splashDialog = new Dialog(that, android.R.style.Theme_Translucent_NoTitleBar);
-                // check to see if the splash screen should be full screen
+               /*  check to see if the splash screen should be full screen
                 if ((getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
                         == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
                     splashDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
+                }*/
                 splashDialog.setContentView(root);
                 splashDialog.setCancelable(false);
                 splashDialog.show();

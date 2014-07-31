@@ -41,7 +41,7 @@ public class CordovaPlugin {
      * @param webView The associated CordovaWebView.
      */
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        assert this.cordova == null;
+        //assert this.cordova == null;
         this.cordova = cordova;
         this.webView = webView;
     }
@@ -128,6 +128,7 @@ public class CordovaPlugin {
      * The final call you receive before your activity is destroyed.
      */
     public void onDestroy() {
+    	
     }
 
     /**

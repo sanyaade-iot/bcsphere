@@ -412,7 +412,7 @@ public class BluetoothG43plus implements IBluetooth{
 		
 		@Override
 		public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-			//Log.i(TAG, "onLeScan");
+			Log.i(TAG, "onLeScan");
 			startScanManage(device, rssi, scanRecord);
 		}
 	};

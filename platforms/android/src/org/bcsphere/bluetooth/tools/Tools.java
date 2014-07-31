@@ -25,6 +25,9 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.a;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -948,5 +951,13 @@ public class Tools {
 		return null;
 	}
 	
+	public static boolean getBluetoothState(){
+		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+		if (adapter.isEnabled()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 }

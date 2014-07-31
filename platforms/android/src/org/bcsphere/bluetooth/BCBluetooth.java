@@ -59,13 +59,13 @@ public class BCBluetooth extends CordovaPlugin {
 
 
 	public BCBluetooth() {
+		
 	}
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-
 		super.initialize(cordova, webView);
-		myContext = this.webView.getContext();
+		myContext = cordova.getActivity().getApplicationContext();
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
 		intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
@@ -78,11 +78,11 @@ public class BCBluetooth extends CordovaPlugin {
 			} else if ((versionOfAPI = sp.getString("API", "no_samsung"))	.equals("samsung")) {
 				bluetoothAPI = (IBluetooth) Class.forName("org.bcsphere.bluetooth.BluetoothSam42").newInstance();
 			} 
-//			else if ((versionOfAPI = sp.getString("API", "no_htc"))
-//					.equals("htc")) {
-//				bluetoothAPI = (IBluetooth) Class.forName(
-//						"org.bcsphere.bluetooth.BluetoothHTC41").newInstance();
-//			}
+			/*else if ((versionOfAPI = sp.getString("API", "no_htc"))
+					.equals("htc")) {
+				bluetoothAPI = (IBluetooth) Class.forName(
+						"org.bcsphere.bluetooth.BluetoothHTC41").newInstance();
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,7 +91,6 @@ public class BCBluetooth extends CordovaPlugin {
 	@Override
 	public boolean execute(final String action, final JSONArray json,
 			final CallbackContext callbackContext) throws JSONException {
-
 		try {
 			if(bluetoothAPI != null){
 				if (isSetContext) {
@@ -386,7 +385,7 @@ public class BCBluetooth extends CordovaPlugin {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				webView.sendJavascript("cordova.fireDocumentEvent('bluetoothopen')");
+				//webView.sendJavascript("cordova.fireDocumentEvent('bluetoothopen')");
 			} else if (intent.getIntExtra(
 					BluetoothAdapter.EXTRA_PREVIOUS_STATE, -1) == 13) {
 				JSONObject joClose = new JSONObject();
@@ -396,7 +395,7 @@ public class BCBluetooth extends CordovaPlugin {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				webView.sendJavascript("cordova.fireDocumentEvent('bluetoothclose')");
+				//webView.sendJavascript("cordova.fireDocumentEvent('bluetoothclose')");
 			}else if(BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
 				
 	            // Get the BluetoothDevice object from the Intent
@@ -416,4 +415,8 @@ public class BCBluetooth extends CordovaPlugin {
 		}
 	};
 
+	public void onDestroy() {
+		myContext.unregisterReceiver(receiver);
+	};
+	
 }

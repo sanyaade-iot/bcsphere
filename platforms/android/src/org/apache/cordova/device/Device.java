@@ -96,7 +96,7 @@ public class Device extends CordovaPlugin {
      * Unregister receiver.
      */
     public void onDestroy() {
-        this.cordova.getActivity().unregisterReceiver(this.telephonyReceiver);
+        this.cordova.getActivity().getApplicationContext().unregisterReceiver(this.telephonyReceiver);
     }
 
     //--------------------------------------------------------------------------
@@ -139,7 +139,7 @@ public class Device extends CordovaPlugin {
         };
 
         // Register the receiver
-        this.cordova.getActivity().registerReceiver(this.telephonyReceiver, intentFilter);
+        this.cordova.getActivity().getApplicationContext().registerReceiver(this.telephonyReceiver, intentFilter);
     }
 
     /**

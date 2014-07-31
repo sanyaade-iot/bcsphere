@@ -17,6 +17,10 @@
 package org.bcsphere.activity;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.bcsphere.activity.R;
 import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentTransaction;
@@ -24,37 +28,38 @@ import android.support.v4.app.FragmentTransaction;
 @SuppressLint("Recycle")
 public class PageManager {
 
-	public static final String HOME_URL = "file:///android_asset/www/apps/homepage/index.html";
+	public static final String SCAN_URL = "file:///android_asset/www/apps/homepage/index.html";
 	private MainActivity mActivity = null;
-	private static HashMap<String, BCPage> pages = null;
-	private String currentUrl = null;
+	public static HashMap<String, BCPage> pages = null;
+	public static String currentUrl = null;
+	public static String deleteUrl = "";
+	private boolean isFirst = true;
 	public PageManager(MainActivity activity) {
 		mActivity = activity;
 		pages = new HashMap<String, BCPage>();
-
-		FragmentTransaction mTransaction = activity.getSupportFragmentManager().beginTransaction();
-		BCPage page = new BCPage(activity, HOME_URL);
-		mTransaction.add(R.id.viewContainer,page).commit();
-		pages.put(HOME_URL, page);
-		currentUrl = HOME_URL;
 	}
 
-	public void createPage(String url, String deviceName, String deviceAddress, String deviceType){
+	public void createPage(String url, String deviceName, String deviceAddress, String deviceType,String appName){
 		if (pages.containsKey(url)) {
 			return;
 		}
-		pages.put(url, new BCPage(mActivity, url, deviceName, deviceAddress, deviceType));
+		pages.put(url, new BCPage(mActivity, url, deviceName, deviceAddress, deviceType, appName));
+	}
+	
+	public void createPage(String url,String isTemporary){
+		FragmentTransaction mTransaction = getTransaction(url);
+		BCPage page = new BCPage(mActivity, url,isTemporary);
+		mTransaction.add(R.id.viewContainer,page).commit();
+		pages.put(url, page);
+		currentUrl = url;
 	}
 
 	public void destroyPage(String url){
-		if (!pages.containsKey(url) || url.equals(HOME_URL)) {
+		if (!pages.containsKey(url)) {
 			return;
 		}
-
-		showPage(HOME_URL);
-
 		if (getPage(url).isAdded()) {
-			getTransaction().remove(getPage(url)).commit();
+			getTransaction(url).remove(getPage(url)).commit();
 		}
 		pages.remove(url);
 	}
@@ -64,10 +69,17 @@ public class PageManager {
 			return;
 		}
 		if (getPage(url).isAdded()) {
-			getTransaction().show(getPage(url)).commit();
-			hidePage(currentUrl);
+			getTransaction(url).show(getPage(url)).commit();
 		}else {
-			getTransaction().add(R.id.viewContainer, getPage(url)).commit();
+			getTransaction(url).add(R.id.viewContainer, getPage(url)).commit();
+		}
+		Iterator iterator = pages.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, BCPage> entry = (Entry<String, BCPage>) iterator.next();
+			String mUrl = entry.getKey();
+			if (!mUrl.equals(url)) {
+				hidePage(mUrl);
+			}
 		}
 		currentUrl = url;
 	}
@@ -76,12 +88,21 @@ public class PageManager {
 		if (!pages.containsKey(url) ) {
 			return;
 		}
-		getTransaction().hide(getPage(currentUrl)).commit();
+		getTransaction(url).hide(getPage(url)).commit();
 	}
 
-	private FragmentTransaction getTransaction(){
+	private FragmentTransaction getTransaction(String url){
 		FragmentTransaction mTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-		mTransaction.setCustomAnimations(R.anim.push_right_in, R.anim.push_right_out);
+		if (url.equals(SCAN_URL)) {
+			if (isFirst) {
+				mTransaction.setCustomAnimations(R.anim.fold_in, R.anim.push_bottom_out);
+				isFirst = false;
+			}else {
+				mTransaction.setCustomAnimations(R.anim.push_bottom_in, R.anim.push_bottom_out);
+			}
+		}else {
+			mTransaction.setCustomAnimations(R.anim.fold_in, R.anim.fold_out);
+		}
 		return mTransaction;
 	}
 
@@ -96,6 +117,14 @@ public class PageManager {
 		return pages.get(urlStr);
 	}
 
+	public static BCPage getCurrentPager(){
+		if (pages.get(currentUrl) != null) {
+			return pages.get(currentUrl);
+		}else {
+			return null;
+		}
+	}
+	
 	public boolean contains(String url){
 		if (pages.containsKey(url)) {
 			return true;
@@ -103,4 +132,24 @@ public class PageManager {
 			return false;
 		}
 	}
+
+	public static String getDeleteUrl() {
+		return deleteUrl;
+	}
+
+	public static void setDeleteUrl(String deleteUrl) {
+		PageManager.deleteUrl = deleteUrl;
+	} 
+	
+	public  void Destroy(){
+		Iterator iterator = pages.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, BCPage> entry = (Entry<String, BCPage>) iterator.next();
+			String url = entry.getKey();
+			pages.get(url).mWebView.handleDestroy();
+		}
+		
+	}
+	
+	
 }

@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/applicaton_background_base"
+    android:orientation="vertical" >
+  <RelativeLayout 
+        android:id="@+id/layoutLint"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:background="@color/hintBar_background"
+        android:visibility="gone"
+        >
+        <TextView 
+            android:id="@+id/hintOpenNetwork"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/application_textColor_base"
+            android:background="@color/hintBar_background"
+            android:textSize="46px"
+            android:paddingLeft="36px"
+            android:gravity="center"
+            android:text="@string/hint_open_network"
+            android:maxLines="1"
+            android:visibility="gone"
+            />
+             <TextView 
+                 android:id="@+id/hintOpenBluetooth"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/application_textColor_base"
+            android:background="@color/hintBar_background"
+            android:textSize="46px"
+            android:paddingLeft="36px"
+            android:gravity="center"
+            android:text="@string/hint_open_bluetooth"
+            android:maxLines="1"
+            android:visibility="gone"
+            />
+        
+    </RelativeLayout>
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/applicaton_background_base"
+        >
+    <org.bcsphere.components.BCWebView
+        android:id="@+id/webChildControls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        />
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="80px"
+        android:layout_height="80px"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/button_close" 
+        android:layout_marginTop="43px"
+        android:layout_marginRight="62px"
+        android:visibility="gone"
+        />
+</RelativeLayout>
+</LinearLayout>

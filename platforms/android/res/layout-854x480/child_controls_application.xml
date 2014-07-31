@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/applicaton_background_base"
+    android:orientation="vertical" >
+
+    <View  
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65px"
+        android:background="@color/applicaton_background_base" >
+
+        <Button
+            android:id="@+id/btnManager"
+            android:layout_width="53px"
+            android:layout_height="53px"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="4px"
+            android:background="@drawable/button_manager" />
+
+        <TextView
+            android:id="@+id/textAppName"
+            android:layout_width="354px"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/btnManager"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/application_textColor_base"
+            android:textSize="27px" />
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="53px"
+            android:layout_height="53px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="4px"
+            android:layout_toRightOf="@+id/textAppName"
+            android:background="@drawable/button_menu" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="6px"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/progress_bar"
+            android:layout_alignParentBottom="true"
+            android:max="100"
+            android:progress="0" />
+    </RelativeLayout>
+    <RelativeLayout 
+        android:id="@+id/layoutLint"
+        android:layout_width="match_parent"
+        android:layout_height="49px"
+        android:background="@color/hintBar_background"
+        android:visibility="gone"
+        >
+        <TextView 
+            android:id="@+id/hintOpenNetwork"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/application_textColor_base"
+            android:background="@color/hintBar_background"
+            android:textSize="20px"
+            android:paddingLeft="16px"
+            android:gravity="center"
+            android:text="@string/hint_open_network"
+            android:maxLines="1"
+            android:visibility="gone"
+            />
+
+          <TextView 
+              android:id="@+id/hintOpenBluetooth"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/application_textColor_base"
+            android:background="@color/hintBar_background"
+            android:textSize="20px"
+            android:paddingLeft="16px"
+            android:gravity="center"
+            android:text="@string/hint_open_bluetooth"
+            android:maxLines="1"
+            android:visibility="gone"
+            />
+        
+        
+    </RelativeLayout>
+    
+    
+    <org.bcsphere.components.BCWebView 
+        android:id="@+id/webChildControls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

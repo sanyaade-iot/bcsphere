@@ -18,18 +18,17 @@ package org.bcsphere.components;
 
 import java.io.InputStream;
 import android.annotation.TargetApi;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
 
 import org.apache.cordova.CordovaWebViewClient;
 import org.apache.http.util.EncodingUtils;
 import org.bcsphere.activity.BCPage;
 import org.bcsphere.activity.MainActivity;
+import org.bcsphere.activity.ManagerPopupWindow;
 import org.bcsphere.activity.PageManager;
 
 public class BCWebViewClient extends CordovaWebViewClient
@@ -66,13 +65,19 @@ public class BCWebViewClient extends CordovaWebViewClient
 				page.mProgressBar.setVisibility(View.INVISIBLE);
 			}
 		}
+		if (url.equals(ManagerPopupWindow.HOME_PAGE)) {
+			String jsWrapper = "eval(%s)";
+			String perfix = "www";
+			injectDeferredObject(readFileContent(perfix + "/cordova.js"), jsWrapper,view);
+		}
+		
 		if(null != page && !page.isLoaded){
 			String jsWrapper = "eval(%s)";
 			String perfix = "www";
 			injectDeferredObject(readFileContent(perfix + "/cordova.js"), jsWrapper,view);
 			PageManager.getPage(url).isLoaded = true;
 		}
-	}
+	}	
 	
 	@Override
 	@TargetApi(8)

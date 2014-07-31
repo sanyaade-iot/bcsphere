@@ -366,4 +366,9 @@ public class BCWebView extends CordovaWebView
 			mBoMethodsLoaded = true;
 		}
 	}
+	
+	@Override
+	public void handleDestroy() {
+		super.handleDestroy();
+	}
 }
