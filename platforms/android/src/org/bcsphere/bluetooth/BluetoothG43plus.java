@@ -499,7 +499,6 @@ public class BluetoothG43plus implements IBluetooth{
 		}
 	};
 
-
 	private void startScanManage(BluetoothDevice device , int rssi , byte[] scanRecord){
 		JSONObject obj = new JSONObject();
 		Tools.addProperty(obj, Tools.DEVICE_ADDRESS, device.getAddress());

@@ -9,14 +9,15 @@
         android:id="@+id/textMenuItem"
         android:layout_width="229px"
         android:layout_height="62px"
-        android:gravity="center"
-        android:textSize="27px"
         android:background="@color/transparent_background"
-        android:textColor="@color/application_textColor_base" />
-	<View 
-	    android:id="@+id/viewLine"
-	    android:layout_height="1px"
-	    android:background="@color/divisionLine_background"
-	    android:layout_width="229px"/>
-	
+        android:gravity="center"
+        android:textColor="@color/application_textColor_base"
+        android:textSize="27px" />
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="229px"
+        android:layout_height="1px"
+        android:background="@color/divisionLine_background" />
+
 </LinearLayout>

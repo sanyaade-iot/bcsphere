@@ -23,11 +23,11 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="ManagerPopupWindow_Anim_Style">
+    <style name="Top_In_Top_Out_Anim_Style">
         <item name="android:windowEnterAnimation">@anim/push_top_in</item>
         <item name="android:windowExitAnimation">@anim/push_top_out</item>
     </style>
-      <style name="MenuPopupWindow_Anim_Style">
+      <style name="Amplification_In_Shrink_Out_Anim_Style">
         <item name="android:windowEnterAnimation">@anim/amplification_in</item>
         <item name="android:windowExitAnimation">@anim/shrink_out</item>
     </style>

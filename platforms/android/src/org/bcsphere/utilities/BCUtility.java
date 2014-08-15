@@ -58,8 +58,8 @@ public class BCUtility extends CordovaPlugin{
 			//appidIntent.putExtra("app_url", appid_url.get(appid));
 			//appidIntent.putExtra("deviceID", "null");
 			//this.webView.getContext().sendBroadcast(appidIntent);
-		}else if(action.equals("addAppToManage")){
-			Log.i("BCUtility", "addAppToManage");
+		}else if(action.equals("addApp")){
+			Log.i("BCUtility", "addApp");
 			AppManageCallback = callbackContext;
 			IntentFilter mFilter = new IntentFilter();
 			mFilter.addAction("appInfo");
@@ -69,7 +69,7 @@ public class BCUtility extends CordovaPlugin{
 			IntentFilter mFilter = new IntentFilter();
 			mFilter.addAction("removeApp");
 			mContext.registerReceiver(mReceiver, mFilter);
-		}else if(action.equals("openAllApp")){
+		}else if(action.equals("openApps")){
 			Intent urlIntent = new Intent();
 			for (int i = 0; i < args.length(); i++) {
 				String url = args.getJSONObject(i).getString("url");
@@ -79,7 +79,6 @@ public class BCUtility extends CordovaPlugin{
 				String appName = args.getJSONObject(i).getString("appName");
 				String imageURL = args.getJSONObject(i).getString("imageURL");
 				String isTemporary  =  args.getJSONObject(i).getString("isTemporary");
-				String index = args.getJSONObject(0).getString("index");
 				urlIntent.setAction("OPEN_ALL_APPLICATION");
 				urlIntent.putExtra("app_url", url);
 				urlIntent.putExtra("deviceAddress", deviceAddress);

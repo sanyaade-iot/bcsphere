@@ -31,14 +31,14 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.TranslateAnimation;
 import android.widget.PopupWindow;
 
-@SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
+@SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ViewConstructor" })
 public class ManagerPopupWindow extends PopupWindow implements OnTouchListener{
 	
 	public  View managerView;
 	private LayoutInflater inflater;
 	public BCWebView mWebView = null;
 	private Activity mActivity;
-	public static String HOME_PAGE = "file:///android_asset/www/apps/homepage/appManage.html";
+	public static String MANAGE = "file:///android_asset/www/apps/homepage/appManage.html";
 	
 	public ManagerPopupWindow(MainActivity activity) {
 		mActivity = activity;
@@ -47,7 +47,7 @@ public class ManagerPopupWindow extends PopupWindow implements OnTouchListener{
 		mWebView = (BCWebView) managerView.findViewById(R.id.webViewManager);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.setWebViewClient(new BCWebViewClient(activity));
-		mWebView.loadUrl(HOME_PAGE);
+		mWebView.loadUrl(MANAGE);
 		mWebView.setOnLongClickListener(new OnLongClickListener() {
 			
 			@Override
@@ -60,7 +60,7 @@ public class ManagerPopupWindow extends PopupWindow implements OnTouchListener{
 		this.setWidth(LayoutParams.MATCH_PARENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
 		this.setFocusable(true);
-		this.setAnimationStyle(R.style.ManagerPopupWindow_Anim_Style);
+		this.setAnimationStyle(R.style.Top_In_Top_Out_Anim_Style);
 		managerView.setOnTouchListener(this);
 	}
 

@@ -73,7 +73,7 @@ public class PageManager {
 		}else {
 			getTransaction(url).add(R.id.viewContainer, getPage(url)).commit();
 		}
-		Iterator iterator = pages.entrySet().iterator();
+		Iterator<Entry<String, BCPage>> iterator = pages.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, BCPage> entry = (Entry<String, BCPage>) iterator.next();
 			String mUrl = entry.getKey();
@@ -142,7 +142,7 @@ public class PageManager {
 	} 
 	
 	public  void Destroy(){
-		Iterator iterator = pages.entrySet().iterator();
+		Iterator<Entry<String, BCPage>> iterator = pages.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, BCPage> entry = (Entry<String, BCPage>) iterator.next();
 			String url = entry.getKey();

@@ -10,57 +10,52 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_picture"
         android:orientation="vertical" >
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/textMessage"
+            android:layout_width="400px"
             android:layout_height="wrap_content"
-            android:layout_width="400px"
             android:background="@color/transparent_background"
+            android:gravity="center"
+            android:padding="30px"
             android:textColor="#ff333333"
-            android:textSize="21px"
-			android:padding="30px"            
-			android:gravity="center"
-            />
-        <View 
+            android:textSize="21px" />
+
+        <View
+            android:layout_width="400px"
             android:layout_height="1px"
+            android:background="#ffa1a1a1" />
+
+        <LinearLayout
             android:layout_width="400px"
-            android:background="#ffa1a1a1"
-            />
-        <LinearLayout 
             android:layout_height="60px"
-            android:layout_width="400px"
-            android:orientation="horizontal"
-            >
-            <Button 
+            android:orientation="horizontal" >
+
+            <Button
                 android:id="@+id/btnNegative"
-                android:layout_height="60px"
                 android:layout_width="0dp"
+                android:layout_height="60px"
                 android:layout_weight="1"
+                android:background="@color/transparent_background"
                 android:gravity="center"
                 android:textColor="#ff157efb"
-                android:background="@color/transparent_background"
-                android:textSize="27px"
-                />
-            <View 
-                android:layout_height="60px"
+                android:textSize="27px" />
+
+            <View
                 android:layout_width="1px"
-                android:background="#ffa1a1a1"
-                />
-              <Button 
-                android:id="@+id/btnPositive"
                 android:layout_height="60px"
+                android:background="#ffa1a1a1" />
+
+            <Button
+                android:id="@+id/btnPositive"
                 android:layout_width="0dp"
+                android:layout_height="60px"
                 android:layout_weight="1"
+                android:background="@color/transparent_background"
                 android:gravity="center"
                 android:textColor="#ffd20028"
-                android:background="@color/transparent_background"
-                android:textSize="27px"
-                />
-            
-            
+                android:textSize="27px" />
         </LinearLayout>
-        
     </LinearLayout>
-    
 
 </LinearLayout>

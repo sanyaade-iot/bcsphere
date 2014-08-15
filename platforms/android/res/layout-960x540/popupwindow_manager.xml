@@ -4,10 +4,10 @@
     android:layout_height="215px"
     android:background="@color/applicaton_background_base"
     android:orientation="vertical" >
+
     <org.bcsphere.components.BCWebView
         android:id="@+id/webViewManager"
         android:layout_width="match_parent"
-        android:layout_height="215px"
-        />
-	
+        android:layout_height="215px" />
+
 </LinearLayout>

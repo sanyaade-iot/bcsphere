@@ -54,7 +54,7 @@ import android.widget.TextView;
 public class BCPage extends Fragment implements OnClickListener{
 
 	public View parentView = null ;
-	private Button btnManager = null ,btnMenu  = null;
+	public Button btnManager = null ,btnMenu  = null,btnBack = null;
 	private MainActivity mActivity = null;
 	private MenuPopupWindow menuPopupWindow = null;
 	public TextView textAppName = null;
@@ -71,7 +71,7 @@ public class BCPage extends Fragment implements OnClickListener{
 	private RelativeLayout linHint = null;
 	public Button closePage = null;
 	private View view;
-
+	
 	public BCPage(MainActivity activity ,String url ,String isTemporary) {
 		this.url = url;
 		mActivity = activity;
@@ -101,6 +101,7 @@ public class BCPage extends Fragment implements OnClickListener{
 		initWebView();
 		btnManager = (Button) parentView.findViewById(R.id.btnManager);
 		btnMenu = (Button) parentView.findViewById(R.id.btnMenu);
+		btnBack = (Button) parentView.findViewById(R.id.btnBack);
 		textAppName = (TextView) parentView.findViewById(R.id.textAppName);
 		mProgressBar =  (ProgressBar) parentView.findViewById(R.id.progressBar);
 		linHint = (RelativeLayout) parentView.findViewById(R.id.layoutLint);
@@ -109,6 +110,7 @@ public class BCPage extends Fragment implements OnClickListener{
 		view = parentView.findViewById(R.id.view);
 		btnManager.setOnClickListener(this);
 		btnMenu.setOnClickListener(this);
+		btnBack.setOnClickListener(this);
 		hintOpenBluetooth.setOnClickListener(this);
 		hintOpenNetwork.setOnClickListener(this);
 		textAppName.setText(appName);
@@ -195,6 +197,9 @@ public class BCPage extends Fragment implements OnClickListener{
 				return;
 			}
 			menuPopupWindow.showAsDropDown(btnMenu,0,20);
+			break;
+		case R.id.btnBack:
+			mWebView.goBack();
 			break;
 		case R.id.btnClose:
 			Intent intent = new Intent();

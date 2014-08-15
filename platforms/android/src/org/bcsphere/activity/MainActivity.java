@@ -88,11 +88,11 @@ public class MainActivity extends CordovaActivity {
 
 			if (managerPopupWindow.isShowing()) {
 				managerPopupWindow.dismiss();
-				if (pageManager.getCurrentPager()!=null) {
+				if (PageManager.getCurrentPager()!=null) {
 					TranslateAnimation animation = new TranslateAnimation(0, 0, (float) (BCPage.getScreenHeight(MainActivity.this) * (430.0 / 1920.0)), 0 );
 					animation.setDuration(200);
 					animation.setFillAfter(true);
-					pageManager.getCurrentPager().parentView.startAnimation(animation);
+					PageManager.getCurrentPager().parentView.startAnimation(animation);
 				}
 			}
 
@@ -143,7 +143,7 @@ public class MainActivity extends CordovaActivity {
 				}else if(!pageManager.contains(url) && url.length() >0 && url.equals(PageManager.SCAN_URL)){//create scan page
 					pageManager.createPage(url,isTemporary);
 
-				}else if (pageManager.contains(url) && !pageManager.currentUrl.equals(url) && !url.equals(PageManager.SCAN_URL)) {
+				}else if (pageManager.contains(url) && !PageManager.currentUrl.equals(url) && !url.equals(PageManager.SCAN_URL)) {
 					pageManager.showPage(url);
 					if (pageManager.contains(PageManager.SCAN_URL)) {
 						pageManager.destroyPage(PageManager.SCAN_URL);

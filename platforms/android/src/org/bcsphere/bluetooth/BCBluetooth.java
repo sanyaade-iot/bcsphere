@@ -397,15 +397,16 @@ public class BCBluetooth extends CordovaPlugin {
 				}
 				//webView.sendJavascript("cordova.fireDocumentEvent('bluetoothclose')");
 			}else if(BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
-				
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+	            short rssi = intent.getExtras().getShort(BluetoothDevice.EXTRA_RSSI);
 	            // Add the name and address to an array adapter to show in a ListView
 	    		JSONObject obj = new JSONObject();
 	    		Tools.addProperty(obj, Tools.DEVICE_ADDRESS, device.getAddress());
 	    		Tools.addProperty(obj, Tools.DEVICE_NAME, device.getName());
 	    		Tools.addProperty(obj, Tools.IS_CONNECTED, Tools.IS_FALSE);
-	    		Tools.addProperty(obj, Tools.TYPE, "Classical");
+	    		Tools.addProperty(obj, Tools.RSSI, (int)rssi);
+	    		Tools.addProperty(obj, Tools.TYPE, "Classical"); 
 	    		PluginResult pluginResult = new PluginResult(PluginResult.Status.OK , obj);
 	    		pluginResult.setKeepCallback(true);
 	    		if (newadvpacketContext != null) {

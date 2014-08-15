@@ -12,7 +12,7 @@
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-*/
+ */
 
 package org.bcsphere.components;
 
@@ -45,6 +45,11 @@ public class BCWebViewClient extends CordovaWebViewClient
 	public void onPageStarted(WebView view, String url, Bitmap favicon)
 	{
 		super.onPageStarted(view, url, favicon);
+
+		if (PageManager.getCurrentPager() != null) {
+			System.out.println(PageManager.getCurrentPager().url);
+		}		
+
 		BCPage page = PageManager.getPage(url);
 		if (page != null) {
 			if (page.mProgressBar != null && page.mProgressBar.getVisibility() == View.INVISIBLE) {
@@ -53,7 +58,7 @@ public class BCWebViewClient extends CordovaWebViewClient
 			}
 		}
 	}
-	
+
 	@Override
 	public void onPageFinished(WebView view, String url)
 	{
@@ -65,12 +70,12 @@ public class BCWebViewClient extends CordovaWebViewClient
 				page.mProgressBar.setVisibility(View.INVISIBLE);
 			}
 		}
-		if (url.equals(ManagerPopupWindow.HOME_PAGE)) {
+		if (url.equals(ManagerPopupWindow.MANAGE)) {
 			String jsWrapper = "eval(%s)";
 			String perfix = "www";
 			injectDeferredObject(readFileContent(perfix + "/cordova.js"), jsWrapper,view);
 		}
-		
+
 		if(null != page && !page.isLoaded){
 			String jsWrapper = "eval(%s)";
 			String perfix = "www";
@@ -78,7 +83,7 @@ public class BCWebViewClient extends CordovaWebViewClient
 			PageManager.getPage(url).isLoaded = true;
 		}
 	}	
-	
+
 	@Override
 	@TargetApi(8)
 	public void onReceivedSslError(WebView view, SslErrorHandler handler,
@@ -100,7 +105,7 @@ public class BCWebViewClient extends CordovaWebViewClient
 		}  
 		return result;  
 	}
-	
+
 
 	private void injectDeferredObject(String source,String jsWrapper,final WebView view) {
 		String scriptToInject;
@@ -121,7 +126,7 @@ public class BCWebViewClient extends CordovaWebViewClient
 			}
 		});
 	}
-	
+
 	@Override
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
 		view.loadUrl(url);
@@ -132,7 +137,6 @@ public class BCWebViewClient extends CordovaWebViewClient
 	public void onReceivedError(WebView view, int errorCode,
 			String description, String failingUrl) {
 		super.onReceivedError(view, errorCode, description, failingUrl);
-		
 	}
 
 }

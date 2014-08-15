@@ -16,6 +16,7 @@
 
 package org.bcsphere.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+@SuppressLint("ViewConstructor")
 public class MenuPopupWindow extends PopupWindow implements OnItemClickListener,OnTouchListener{
 
 	private View  menuView;
@@ -54,7 +56,7 @@ public class MenuPopupWindow extends PopupWindow implements OnItemClickListener,
 		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
 		this.setFocusable(true);
-		this.setAnimationStyle(R.style.MenuPopupWindow_Anim_Style);
+		this.setAnimationStyle(R.style.Amplification_In_Shrink_Out_Anim_Style);
 		menuView.setOnTouchListener(this);
 	}
 

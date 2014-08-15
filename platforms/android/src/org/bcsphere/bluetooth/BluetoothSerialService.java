@@ -113,9 +113,9 @@ public class BluetoothSerialService {
                        }
                        break;
                    case MESSAGE_WRITE:
-                       //  byte[] writeBuf = (byte[]) msg.obj;
-                       //  String writeMessage = new String(writeBuf);
-                       //  Log.i(TAG, "Wrote: " + writeMessage);
+                         byte[] writeBuf = (byte[]) msg.obj;
+                         String writeMessage = new String(writeBuf);
+                         Log.i(TAG, "Wrote: " + writeMessage);
                        break;
                    case MESSAGE_DEVICE_NAME:
                        //Log.i(TAG, msg.getData().getString(DEVICE_NAME));
@@ -205,7 +205,7 @@ public class BluetoothSerialService {
 
         // Cancel any thread currently running a connection
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
-
+        
         // Start the thread to connect with the given device
         mConnectThread = new ConnectThread(device,uuid,secure);
         mConnectThread.start();
@@ -457,26 +457,19 @@ public class BluetoothSerialService {
 	                    mmSocket = (BluetoothSocket) m.invoke(mmSocket.getRemoteDevice(), params);
 	                    Thread.sleep(500);
 	                    mmSocket.connect();
-	              
                      }
                      catch (NoSuchMethodException e1) {
- 						// TODO Auto-generated catch block
  						e1.printStackTrace();
  					} catch (IllegalAccessException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IllegalArgumentException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (InvocationTargetException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 		                    try {
 								mmSocket.close();
 							} catch (IOException e2) {
-								// TODO Auto-generated catch block
 			                    Log.e(TAG, "unable to close() " + mSocketType + " socket during connection failure", e1);
 								e2.printStackTrace();
 							}
@@ -484,18 +477,14 @@ public class BluetoothSerialService {
 		                    e1.printStackTrace();
 		                    connectionFailed();
 				    } catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-                
-                return;
             }
 
             // Reset the ConnectThread because we're done
             synchronized (BluetoothSerialService.this) {
                 mConnectThread = null;
             }
-
             // Start the connected thread
             connected(mmSocket, mmDevice, mSocketType);
         }

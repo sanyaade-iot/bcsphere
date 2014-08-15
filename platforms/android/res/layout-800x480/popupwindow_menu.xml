@@ -16,8 +16,8 @@
             android:id="@+id/listMenu"
             android:layout_width="229px"
             android:layout_height="wrap_content"
-            android:background="@color/transparent_background"
-            android:layout_marginTop="6px" >
+            android:layout_marginTop="6px"
+            android:background="@color/transparent_background" >
         </ListView>
     </LinearLayout>
 

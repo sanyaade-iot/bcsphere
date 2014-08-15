@@ -54,8 +54,8 @@
                 android:layout_height="145px"
                 android:layout_weight="1"
                 android:background="@color/transparent_background"
-                android:textColor="#ff157efb"
                 android:gravity="center"
+                android:textColor="#ff157efb"
                 android:textSize="60px" />
 
             <View
@@ -69,8 +69,8 @@
                 android:layout_height="145px"
                 android:layout_weight="1"
                 android:background="@color/transparent_background"
-                android:textColor="#ff157efb"
                 android:gravity="center"
+                android:textColor="#ff157efb"
                 android:textSize="60px" />
         </LinearLayout>
     </LinearLayout>

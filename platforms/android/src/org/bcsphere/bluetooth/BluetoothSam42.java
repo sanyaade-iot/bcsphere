@@ -21,11 +21,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.UUID;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
+import org.bcsphere.bluetooth.tools.Tools;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +37,6 @@ import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProfile.ServiceListener;
 import android.content.Context;
 import android.util.Log;
-
-import org.bcsphere.bluetooth.tools.Tools;
 
 import com.samsung.android.sdk.bt.gatt.BluetoothGatt;
 import com.samsung.android.sdk.bt.gatt.BluetoothGattAdapter;
