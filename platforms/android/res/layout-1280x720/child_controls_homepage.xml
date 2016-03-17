@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/applicaton_background_base"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/applicaton_background_base" >
+
+        <org.bcsphere.components.BCWebView
+            android:id="@+id/webChildControls"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/layoutLint"
+            android:layout_width="match_parent"
+            android:layout_height="73px"
+            android:layout_alignParentTop="true"
+            android:background="@color/hintBar_background"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/hintOpenNetwork"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/hintBar_background"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="24px"
+                android:text="@string/hint_open_network"
+                android:textColor="@color/application_textColor_base"
+                android:textSize="31px"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hintOpenBluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/hintBar_background"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="24px"
+                android:text="@string/hint_open_bluetooth"
+                android:textColor="@color/application_textColor_base"
+                android:textSize="31px"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="53px"
+            android:layout_height="53px"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="41px"
+            android:layout_marginTop="29px"
+            android:background="@drawable/button_close"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

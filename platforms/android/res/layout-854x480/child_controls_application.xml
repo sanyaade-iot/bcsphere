@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/applicaton_background_base"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65px"
+        android:background="@color/applicaton_background_base" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="53px"
+            android:layout_height="53px"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="4px" >
+
+            <Button
+                android:id="@+id/btnManager"
+                android:layout_width="53px"
+                android:layout_height="53px"
+                android:background="@drawable/button_manager" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="53px"
+                android:layout_height="53px"
+                android:background="@drawable/button_back"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textAppName"
+            android:layout_width="354px"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/relativeLayout"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/application_textColor_base"
+            android:textSize="27px" />
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="53px"
+            android:layout_height="53px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="4px"
+            android:layout_toRightOf="@+id/textAppName"
+            android:background="@drawable/button_menu" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/applicaton_background_base" >
+
+        <org.bcsphere.components.BCWebView
+            android:id="@+id/webChildControls"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true" />
+
+        <RelativeLayout
+            android:id="@+id/layoutLint"
+            android:layout_width="match_parent"
+            android:layout_height="49px"
+            android:layout_alignParentTop="true"
+            android:background="@color/hintBar_background"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/hintOpenNetwork"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/hintBar_background"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="16px"
+                android:text="@string/hint_open_network"
+                android:textColor="@color/application_textColor_base"
+                android:textSize="20px"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hintOpenBluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/hintBar_background"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="16px"
+                android:text="@string/hint_open_bluetooth"
+                android:textColor="@color/application_textColor_base"
+                android:textSize="20px"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6px"
+            android:layout_alignParentTop="true"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_bar" />
+    </RelativeLayout>
+
+</LinearLayout>

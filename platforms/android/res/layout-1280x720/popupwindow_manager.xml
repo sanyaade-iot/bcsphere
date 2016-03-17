@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="287px"
+    android:background="@color/applicaton_background_base"
+    android:orientation="vertical" >
+
+    <org.bcsphere.components.BCWebView
+        android:id="@+id/webViewManager"
+        android:layout_width="match_parent"
+        android:layout_height="287px" />
+
+</LinearLayout>

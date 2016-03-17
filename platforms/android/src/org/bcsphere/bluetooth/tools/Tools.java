@@ -21,11 +21,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
-
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.a;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -33,13 +34,13 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Base64;
-
 import android.bluetooth.BluetoothGattCharacteristic;
 
 
 @SuppressLint({ "UseSparseArrays", "SimpleDateFormat", "DefaultLocale" })
 public class Tools {
 	public static final String ADVERTISEMENT_DATA = "advertisementData";
+	public static final String TYPE = "type";
 	public static final String BLUETOOTH_CLOSE = "bluetoothclose";
 	public static final String BLUETOOTH_OPEN = "bluetoothopen";
 	public static final String BLUETOOTH_STATE = "state";
@@ -102,11 +103,12 @@ public class Tools {
 	public static final String SUCCESS = "success";
 	public static final String ERROR = "error";
 	public static final String MES = "mes";
-	public static final UUID NOTIFICATION_UUID = UUID
+	public static final String NEW_ADV_PACKET = "newadvpacket";
+	public static final UUID NOTIFICATION_UUID = java.util.UUID
 			.fromString("00002902-0000-1000-8000-00805f9b34fb");
-	public static final UUID GENERIC_ACCESS_UUID = UUID
+	public static final UUID GENERIC_ACCESS_UUID = java.util.UUID
 			.fromString("00001800-0000-1000-8000-00805f9b34fb");
-	public static final UUID GENERIC_ATTRIBUTE_UUID = UUID
+	public static final UUID GENERIC_ATTRIBUTE_UUID = java.util.UUID
 			.fromString("00001801-0000-1000-8000-00805f9b34fb");
 	public static final String LOCAL_NAME = "localName";
 	public static final String TXPOWER_LEVEL = "txPowerLevel";
@@ -115,7 +117,9 @@ public class Tools {
 	public static final String OVERFLOW_SERVICE_UUIDS = "overflowServiceUUIDs";
 	public static final String ISCONNECTABLE = "isConnectable";
 	public static final String SOLICITED_SERVICE_UUIDS = "solicitedServiceUUIDs";
-
+	public static final String SECURE = "secure";
+	public static final String UUID = "uuid";
+	public static final String NAME = "name";
 	private static final String REMOVE_BOND = "removeBond";
 	private static final String CREATE_BOND = "createBond";
 	private static final String UNKNOWN = "unknown";
@@ -947,5 +951,13 @@ public class Tools {
 		return null;
 	}
 	
+	public static boolean getBluetoothState(){
+		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+		if (adapter.isEnabled()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 }

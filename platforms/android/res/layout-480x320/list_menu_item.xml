@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/listView_item_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textMenuItem"
+        android:layout_width="153px"
+        android:layout_height="37px"
+        android:background="@color/transparent_background"
+        android:gravity="center"
+        android:textColor="@color/application_textColor_base"
+        android:textSize="18px" />
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="153px"
+        android:layout_height="1px"
+        android:background="@color/divisionLine_background" />
+
+</LinearLayout>
